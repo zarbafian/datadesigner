@@ -1,0 +1,18 @@
+<md-input-container>
+    <input mdInput placeholder="username" value="" [(ngModel)]="username">
+</md-input-container>
+<br/>
+<md-input-container>
+  <input #loginpassword mdInput placeholder="password" value="" [(ngModel)]="password">
+</md-input-container>
+<br/>
+<button md-raised-button (click)="onSubmitLogin()">Login</button>
+
+<button md-raised-button (click)="logout()">Logout</button>
+
+<br/>
+<button md-raised-button (click)="getApi()">API CALL</button>
+<button md-raised-button (click)="getAdminApi()">ADMIN API CALL</button>
+
+<br/><br/>
+<button md-raised-button (click)="principal()">Get principal</button>
