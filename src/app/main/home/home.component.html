@@ -1,18 +1,18 @@
-<md-input-container>
-    <input mdInput placeholder="username" value="" [(ngModel)]="username">
-</md-input-container>
+<mat-input-container>
+    <input matInput placeholder="username" value="" [(ngModel)]="username">
+</mat-input-container>
 <br/>
-<md-input-container>
-  <input #loginpassword mdInput placeholder="password" value="" [(ngModel)]="password">
-</md-input-container>
+<mat-input-container>
+  <input #loginpassword matInput placeholder="password" value="" [(ngModel)]="password">
+</mat-input-container>
 <br/>
-<button md-raised-button (click)="onSubmitLogin()">Login</button>
+<button mat-raised-button (click)="onSubmitLogin()">Login</button>
 
-<button md-raised-button (click)="logout()">Logout</button>
+<button mat-raised-button (click)="logout()">Logout</button>
 
 <br/>
-<button md-raised-button (click)="getApi()">API CALL</button>
-<button md-raised-button (click)="getAdminApi()">ADMIN API CALL</button>
+<button mat-raised-button (click)="getApi()">API CALL</button>
+<button mat-raised-button (click)="getAdminApi()">ADMIN API CALL</button>
 
 <br/><br/>
-<button md-raised-button (click)="principal()">Get principal</button>
+<button mat-raised-button (click)="principal()">Get principal</button>
