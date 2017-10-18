@@ -41,11 +41,6 @@ export class LoginService {
                 )
                 .map(
                   resp => resp
-                )
-                .subscribe(
-                  data => this.handleResponse(data),
-                  err => this.logError(err),
-                  () => console.log('Authentication Complete')
                 );
   }
 
@@ -66,11 +61,6 @@ export class LoginService {
                 )
                 .map(
                   resp => resp
-                )
-                .subscribe(
-                  data => this.handleResponse(data),
-                  err => this.logError(err),
-                  () => console.log('Logout Complete')
                 );
   }
 
@@ -125,8 +115,14 @@ export class LoginService {
             )
   }
   
-  handleResponse(resp) {
+  loginSuccess(resp) {
     console.log('login success: ' + resp);
+    return resp;
+  }
+  
+  logoutSuccess(resp) {
+    console.log('logout success:  ' + resp);
+    //return Promise.resolve(resp);
   }
   logError(err) {
     console.log('login error: ' + err);

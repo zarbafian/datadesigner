@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Router /*, ActivatedRoute, ParamMap*/ } from '@angular/router';
+
 import { LoginService } from '../../service/login.service';
 
 import { Logger } from '../../util/Logger';
@@ -13,10 +15,10 @@ const LOGGER: Logger = Logger.getLogger();
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private loginService: LoginService) { }
-
-  username: string = 'poz';
-  password: string = 'poz';
+  constructor(
+    private loginService: LoginService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     LOGGER.debug('HomeComponent.ngOnInit');
@@ -37,26 +39,15 @@ export class HomeComponent implements OnInit {
     this.loginService.isAdminApiUp();
   }
   
-  onSubmitLogin() {
-    LOGGER.debug('HomeComponent.onSubmitLogin');
-    console.log('onSubmitLogin');
-    
-    let creds = {username: this.username, password: this.password};
-    this.loginService
-    .login(creds)
-    /* .subscribe(
-      data => console.log('DATA: ' + data)
-    ) */
-    ;
-  }
-  
   logout() {
     LOGGER.debug('HomeComponent.logout');
     this.loginService
                 .logout()
-                /* .subscribe(
-                  data => console.log('DATA: ' + data)
-                ) */
-                ;
+                .subscribe(
+                  data => {
+                    LOGGER.debug('HomeComponent - logout successful: ' + data);
+                    this.router.navigate(['/signin']);
+                  }
+                );
   }
 }

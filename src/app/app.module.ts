@@ -21,10 +21,11 @@ import { HomeComponent } from './main/home/home.component';
 import { LoginComponent } from './main/login/login.component';
 
 const appRoutes: Routes = [
+  { path: 'signin', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   //{ path: 'registry', component: RegistryComponent },
  
-  { path: '',   redirectTo: '/home', pathMatch: 'full' },
+  { path: '',   redirectTo: '/signin', pathMatch: 'full' },
   //{ path: '**', component: HomeComponent }
   //{ path: '**', component: PageNotFoundComponent }
 ];

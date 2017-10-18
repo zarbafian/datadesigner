@@ -1,4 +1,12 @@
 export class Config {
-    static LOG_LEVEL = 'debug';
+    
+    static LEVELS = {
+        0: 'debug'
+    };
+    static LOG_LEVEL = 0;
     static LOGGER = 'console';
+    
+    static isDevMode() {
+        return true;
+    }
 }

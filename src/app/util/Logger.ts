@@ -1,13 +1,15 @@
 import { Config } from './Config';
+const DEBUG = 0;
 
 export class Logger {
 
     private static instance: Logger;
 
-    private logger;
+    private logLevel;
 
     constructor(appender) {
 
+        this.logLevel = Config.LOG_LEVEL;
     }
 
     static getLogger(): Logger {
@@ -17,11 +19,14 @@ export class Logger {
         return Logger.instance;
     }
 
-    trace(msg) {
-        //this.logger.trace(msg);
+    print(msg: string, level: number) {
+        if(level >= this.logLevel) {
+            console.log(msg);
+        }
     }
+
     debug(msg) {
-        //this.logger.debug(msg);
+        this.print(msg, DEBUG);
     }
     info(msg) {
         //this.logger.info(msg);
@@ -32,8 +37,14 @@ export class Logger {
     error(msg) {
         //this.logger.error(msg);
     }
-    fatal(msg) {
-        //this.logger.fatal(msg);
+
+    parseString(level: string) {
+        if(level === 'debug') {
+            return DEBUG;
+        }
+        else {
+            console.error('Log level"' + level + '" is not defined');
+        }  
     }
     
 }

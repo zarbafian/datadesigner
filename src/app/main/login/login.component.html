@@ -1,3 +1,21 @@
-<p>
-  login works!
-</p>
+<div class="">
+    <mat-toolbar>
+        <span>Welcome, please login.</span>
+
+        <mat-toolbar-row>
+            <mat-form-field>
+                <input matInput placeholder="Username" value="" [(ngModel)]="username">
+            </mat-form-field>
+        </mat-toolbar-row>
+
+        <mat-toolbar-row>
+            <mat-form-field>
+                    <input #loginpassword matInput placeholder="Password" value="" [(ngModel)]="password">
+            </mat-form-field>
+        </mat-toolbar-row>
+
+        <mat-toolbar-row>
+            <button matInput mat-raised-button (click)="onSubmitLogin()">Login</button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+</div>

@@ -1,18 +1,8 @@
-<mat-input-container>
-    <input matInput placeholder="username" value="" [(ngModel)]="username">
-</mat-input-container>
-<br/>
-<mat-input-container>
-  <input #loginpassword matInput placeholder="password" value="" [(ngModel)]="password">
-</mat-input-container>
-<br/>
-<button mat-raised-button (click)="onSubmitLogin()">Login</button>
-
 <button mat-raised-button (click)="logout()">Logout</button>
 
 <br/>
 <button mat-raised-button (click)="getApi()">API CALL</button>
 <button mat-raised-button (click)="getAdminApi()">ADMIN API CALL</button>
 
-<br/><br/>
-<button mat-raised-button (click)="principal()">Get principal</button>
+<br/>
+<button mat-raised-button (click)="principal()">principal</button>
