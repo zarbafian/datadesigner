@@ -17,8 +17,10 @@ import { Material } from './material';
 import { AuthRequestOptions } from './service/AuthRequestOptions';
 
 import { LoginService } from './service/login.service';
+import { DefinitionsService } from './service/definitions.service';
 import { HomeComponent } from './main/home/home.component';
 import { LoginComponent } from './main/login/login.component';
+import { DefinitionsComponent } from './main/definitions/definitions.component';
 
 const appRoutes: Routes = [
   { path: 'signin', component: LoginComponent },
@@ -35,6 +37,7 @@ const appRoutes: Routes = [
     AppComponent,
     HomeComponent,
     LoginComponent,
+    DefinitionsComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +53,7 @@ const appRoutes: Routes = [
   ],
   providers: [
     LoginService,
+    DefinitionsService,
     { provide: RequestOptions, useClass: AuthRequestOptions},
   ],
   bootstrap: [AppComponent]

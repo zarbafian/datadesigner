@@ -5,22 +5,13 @@ import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
+import { Constants } from '../util/Constants';
+
 import { User } from 'app/data/User';
 import { Role } from 'app/data/Role';
 
-const API_URL = 'http://localhost:8080';
-
 @Injectable()
 export class LoginService {
-
-  private loginUrl = API_URL + '/login';
-  private logoutUrl = API_URL + '/logout';
-  private principalUrl = API_URL + '/api/principal';
-  private apiUrl = API_URL + '/api/status';
-  private apiAdminUrl = API_URL + '/admin/status';
-
-  //private headers = new Headers();
-  //private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(private http: Http) { }
   
@@ -32,7 +23,7 @@ export class LoginService {
     
     return this.http
                 .post(
-                  this.loginUrl, 
+                  Constants.LOGIN, 
                   user, 
                   {
                     //withCredentials: true,
@@ -47,12 +38,10 @@ export class LoginService {
   logout() {
   
     let headers = new Headers();
-    //headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    //let user = "username=" + credentials.username + "&password=" + credentials.password;
-    
+
     return this.http
                 .post(
-                  this.logoutUrl, 
+                  Constants.LOGOUT, 
                   {}, 
                   {
                     //withCredentials: true,
@@ -73,7 +62,7 @@ export class LoginService {
   getPrincipalEx(): Observable<User> {
     return this.http
             .get(
-              this.principalUrl
+              Constants.PRINCIPAL
             )
             .map(
               resp => {
@@ -92,27 +81,27 @@ export class LoginService {
   isApiUp() {
     this.http
             .get(
-              this.apiUrl
+              Constants.API_STATUS
             )
             .map(
               resp => resp
             )
             .subscribe( 
               data => console.log('isApiUp - received: ' + data)
-            )
+            );
   }
 
   isAdminApiUp() {
     this.http
             .get(
-              this.apiAdminUrl
+              Constants.ADMIN_STATUS
             )
             .map(
               resp => resp
             )
             .subscribe( 
               data => console.log('isAdminApiUp - received: ' + data)
-            )
+            );
   }
   
   loginSuccess(resp) {

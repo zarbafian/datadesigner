@@ -1,0 +1,22 @@
+<div>
+  <div class="entity-definitions">
+    <!-- Entity definitions -->
+    <mat-list>
+      <mat-list-item *ngFor="let entityDef of definitions" 
+                     (click)="selectEntityDefinition(entityDef)" 
+                     [class.entity-definition]="true"
+                     [class.selected-entity]="selectedDefinition && (entityDef.name === selectedDefinition.name)">
+        {{entityDef.name}}</mat-list-item>
+    </mat-list>
+  </div>
+
+  <div class="fields-definitions" *ngIf="selectedDefinition">
+    <!-- Entity definition editor -->
+      <div *ngFor="let field of selectedDefinition.fields" class="field-definition">
+        <mat-grid-list cols="2" rowHeight="50px">
+          <mat-grid-tile>{{field.name}}</mat-grid-tile>
+          <mat-grid-tile>{{field.type}}</mat-grid-tile>
+        </mat-grid-list>
+      </div>
+  </div>
+</div>

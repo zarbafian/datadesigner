@@ -1,0 +1,19 @@
+.entity-definition {
+    cursor: pointer;
+}
+.entity-definitions {
+    display: inline-block;
+    vertical-align: top;
+    height: 100%;
+    width: 33%;
+}
+.selected-entity {
+    background-color: #EEEEEE;
+}
+
+.fields-definitions {
+    display: inline-block;
+    height: 100%;
+    width: 66%;
+    background-color: #EEEEEE;
+}
