@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { HttpModule, RequestOptions }    from '@angular/http';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import 'hammerjs';
@@ -21,6 +21,7 @@ import { DefinitionsService } from './service/definitions.service';
 import { HomeComponent } from './main/home/home.component';
 import { LoginComponent } from './main/login/login.component';
 import { DefinitionsComponent } from './main/definitions/definitions.component';
+import { FieldDefinitionEditorComponent } from './editor/field-definition-editor/field-definition-editor.component';
 
 const appRoutes: Routes = [
   { path: 'signin', component: LoginComponent },
@@ -38,6 +39,7 @@ const appRoutes: Routes = [
     HomeComponent,
     LoginComponent,
     DefinitionsComponent,
+    FieldDefinitionEditorComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +47,7 @@ const appRoutes: Routes = [
     Material,
     HttpModule,
     FormsModule,
+    ReactiveFormsModule,
 
     RouterModule.forRoot(
       appRoutes,

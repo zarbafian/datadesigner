@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
+import {FormControl, Validators} from '@angular/forms';
+
 import { DefinitionsService } from '../../service/definitions.service';
 
 import { EntityDefinition } from '../../data/EntityDefinition';
 import { FieldDefinition } from '../../data/FieldDefinition';
 
 import { Logger } from '../../util/Logger';
-
 const LOGGER: Logger = Logger.getLogger();
 
 @Component({
@@ -40,7 +41,13 @@ export class DefinitionsComponent implements OnInit {
     this.definitionsService
       .loadEntityDefinition(this.selectedDefinition)
       .subscribe(
-        data => this.selectedDefinition = data
+        data => {
+          this.selectedDefinition = data;
+        }
       );
+  }
+
+  saveName(newName: string) {
+    LOGGER.debug('new name: ' + newName);
   }
 }

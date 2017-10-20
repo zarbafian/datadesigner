@@ -24,4 +24,7 @@ export class Constants {
         return Constants.DEFINITIONS + '/' + entityName + Constants.FIELDS;
     }
     
+    static getFieldUrl(entityName: string, fieldName: string) {
+        return Constants.DEFINITIONS + '/' + entityName + Constants.FIELDS + '/' + fieldName;
+    }
 }

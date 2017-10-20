@@ -42,4 +42,24 @@ export class DefinitionsService {
       resp => resp.json()
       );
   }
+
+  updateFieldDefinition(entityDef: string, fieldDef: string, newData: FieldDefinition): Observable<FieldDefinition> {
+
+    LOGGER.debug('DefinitionsService.updateFieldDefinition: ' + entityDef);
+
+    return this.http
+      .put(
+      Constants.getFieldUrl(entityDef, fieldDef),
+      newData
+      )
+      .map(
+      resp => {
+        if (resp.status == 200) {
+          return resp.json();
+        }
+        else {
+          throw new Error(resp.statusText);
+        }
+      });
+  }
 }
