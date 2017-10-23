@@ -1,5 +1,7 @@
+import { FieldType } from 'app/data/FieldType';
+
 export class FieldDefinition {
     name: string;
-    type: string;
+    fieldType: FieldType;
   }
   

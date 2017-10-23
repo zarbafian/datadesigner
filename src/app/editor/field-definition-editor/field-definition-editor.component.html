@@ -1,15 +1,13 @@
 <mat-grid-list cols="5" rowHeight="50px">
   <mat-grid-tile colspan="2">
     <mat-form-field>
-      <input #fieldname matInput [formControl]="fieldNameControl" (keyup)="updateName(fieldname.value)" [(value)]="editedName">
-      <!--
-                                    <mat-error *ngIf="emailFormControl.hasError('pattern')">
-                                        Please enter a valid email address
-                                    </mat-error>
-                                -->
+      <input #fieldname matInput 
+      [formControl]="fieldNameControl" 
+      (keyup)="updateName(fieldname.value)" 
+      [(value)]="editedName">
     </mat-form-field>
   </mat-grid-tile>
-  <mat-grid-tile colspan="2">{{field.type}}</mat-grid-tile>
+  <mat-grid-tile colspan="2">{{field.fieldType.label}}</mat-grid-tile>
   <mat-grid-tile colspan="1">
     <mat-icon class="save-field" (click)="saveField()">save</mat-icon>
   </mat-grid-tile>

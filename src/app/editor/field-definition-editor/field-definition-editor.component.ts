@@ -5,6 +5,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { DefinitionsService } from '../../service/definitions.service';
 
 import { FieldDefinition } from '../../data/FieldDefinition';
+import { FieldType } from 'app/data/FieldType';
 
 import { Logger } from '../../util/Logger';
 const LOGGER: Logger = Logger.getLogger();
@@ -22,8 +23,11 @@ export class FieldDefinitionEditorComponent implements OnInit {
   @Input()
   private field: FieldDefinition;
 
+  private fieldNameExists: boolean = false;
+
   private editedName: string;
-  private editedType: string;
+  private editedType: FieldType;
+  
   fieldNameControl;
 
   constructor(
@@ -35,7 +39,7 @@ export class FieldDefinitionEditorComponent implements OnInit {
       Validators.minLength(1)
     ]);
     this.editedName = this.field.name;
-    this.editedType = this.field.type;
+    this.editedType = this.field.fieldType;
   }
 
   updateName(newName: string) {
@@ -46,19 +50,20 @@ export class FieldDefinitionEditorComponent implements OnInit {
     LOGGER.debug('saveField - name: ' + this.editedName);
     let newData = new FieldDefinition();
     newData.name = this.editedName;
-    newData.type = this.editedType;
+    newData.fieldType = this.editedType;
 
     this.definitionsService
       .updateFieldDefinition(this.entity, this.field.name, newData)
       .subscribe(
       data => {
-        LOGGER.debug('update - name: ' + data.name + ', ' + data.type);
+        LOGGER.debug('update - name: ' + data.name + ', ' + data.fieldType.key);
         //this.field = data;
       },
       error => {
         LOGGER.debug('error: ' + error);
-        this.editedName = this.field.name;
-        this.editedType = this.field.type;
+        this.fieldNameExists = true;
+        //this.editedName = this.field.name;
+        //this.editedType = this.field.type;
       });
   }
 }
