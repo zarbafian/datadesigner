@@ -18,7 +18,7 @@
         <!-- Creation mode -->
         <mat-form-field *ngIf="creationMode" floatPlaceholder="never">
           <div class="eighty-pc">
-            <input matInput #entityname [(value)]="newEntityDefName" placeholder="Enter the name" (keyup)="updateName(entityname.value)">
+            <input matInput #entityname [(value)]="newEntityDefName" placeholder="Enter the name" (keyup)="updateName(entityname.value)" (keyup.enter)="saveNewDefinition()">
           </div>
           <div class="twenty-pc">
             <mat-icon (click)="saveNewDefinition()" [class.entity-creation]="true">save</mat-icon>

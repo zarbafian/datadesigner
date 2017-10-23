@@ -44,6 +44,7 @@ export class DefinitionsComponent implements OnInit {
   }
 
   updateName(newName: string) {
+    //LOGGER.debug('updateName:[' + newName + ']');
     this.newEntityDefName = newName;
   }
 
