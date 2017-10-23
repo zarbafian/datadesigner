@@ -26,7 +26,9 @@ export class FieldDefinitionEditorComponent implements OnInit {
   private fieldNameExists: boolean = false;
 
   private editedName: string;
-  private editedType: FieldType;
+  private editedType: string;
+
+  private fieldTypes: FieldType[];
   
   fieldNameControl;
 
@@ -39,7 +41,10 @@ export class FieldDefinitionEditorComponent implements OnInit {
       Validators.minLength(1)
     ]);
     this.editedName = this.field.name;
-    this.editedType = this.field.fieldType;
+    this.editedType = this.field.fieldType.key;
+    this.definitionsService
+      .getFieldTypes()
+      .subscribe(data => this.fieldTypes = data);
   }
 
   updateName(newName: string) {
@@ -50,7 +55,8 @@ export class FieldDefinitionEditorComponent implements OnInit {
     LOGGER.debug('saveField - name: ' + this.editedName);
     let newData = new FieldDefinition();
     newData.name = this.editedName;
-    newData.fieldType = this.editedType;
+    newData.fieldType = new FieldType();
+    newData.fieldType.key = this.editedType;
 
     this.definitionsService
       .updateFieldDefinition(this.entity, this.field.name, newData)

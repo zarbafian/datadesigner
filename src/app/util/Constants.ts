@@ -15,6 +15,11 @@ export class Constants {
     
     static DEFINITIONS = Constants.API + '/definitions';
     static FIELDS = '/fields';
+    static FIELD_TYPES = '/fieldtypes';
+
+    static getFielsTypesUrl() {
+        return Constants.API + '/' + Constants.FIELD_TYPES;
+    }
 
     static getDefinitionUrl(entityName: string) {
         return Constants.DEFINITIONS + '/' + entityName;

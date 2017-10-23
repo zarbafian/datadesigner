@@ -9,6 +9,7 @@ import { Logger } from '../util/Logger';
 
 import { EntityDefinition } from '../data/EntityDefinition';
 import { FieldDefinition } from '../data/FieldDefinition';
+import { FieldType } from '../data/FieldType';
 
 const LOGGER: Logger = Logger.getLogger();
 
@@ -24,6 +25,19 @@ export class DefinitionsService {
     return this.http
       .get(
       Constants.DEFINITIONS
+      )
+      .map(
+      resp => resp.json()
+      );
+  }
+  
+  getFieldTypes(): Observable<FieldType[]> {
+
+    LOGGER.debug('DefinitionsService.getFieldTypes');
+
+    return this.http
+      .get(
+      Constants.getFielsTypesUrl()
       )
       .map(
       resp => resp.json()
