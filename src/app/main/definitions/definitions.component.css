@@ -1,3 +1,12 @@
+.entity-creation {
+    cursor: pointer;
+}
+.entity-deletion {
+    cursor: pointer;
+}
+.entity-creation:hover {
+    box-shadow: 0px 0px 10px 2px #999999;
+}
 .entity-definition {
     cursor: pointer;
 }
@@ -16,4 +25,14 @@
     height: 100%;
     width: 66%;
     background-color: #EEEEEE;
+}
+.eighty-pc {
+    height: 100%;
+    width: 78%;
+    display: inline-block;
+}
+.twenty-pc {
+    height: 100%;
+    width: 18%;
+    display: inline-block;
 }

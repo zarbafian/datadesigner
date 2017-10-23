@@ -30,7 +30,7 @@ export class DefinitionsService {
       resp => resp.json()
       );
   }
-  
+
   getFieldTypes(): Observable<FieldType[]> {
 
     LOGGER.debug('DefinitionsService.getFieldTypes');
@@ -57,6 +57,47 @@ export class DefinitionsService {
       );
   }
 
+  createNewDefinition(entityName: string): Observable<EntityDefinition> {
+    LOGGER.debug('DefinitionsService.createNewDefinition: ' + entityName);
+
+    let newData = new EntityDefinition();
+    newData.name = entityName;
+
+    return this.http
+      .post(
+      Constants.getDefinitionsUrl(),
+      newData
+      )
+      .map(
+      resp => {
+        if (resp.status == 200) {
+          return resp.json();
+        }
+        else {
+          throw new Error(resp.statusText);
+        }
+      });
+  }
+
+  deleteEntityDefinition(entityDef: EntityDefinition): Observable<void> {
+
+    LOGGER.debug('deleteEntityDefinition.createNewDefinition: ' + entityDef.name);
+
+    return this.http
+      .delete(
+      Constants.getDefinitionUrl(entityDef.name)
+      )
+      .map(
+      resp => {
+        if (resp.status == 204) {
+          return;
+        }
+        else {
+          throw new Error(resp.statusText);
+        }
+      }
+      );
+  }
   updateFieldDefinition(entityDef: string, fieldDef: string, newData: FieldDefinition): Observable<FieldDefinition> {
 
     LOGGER.debug('DefinitionsService.updateFieldDefinition: ' + entityDef);

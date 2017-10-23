@@ -21,6 +21,10 @@ export class Constants {
         return Constants.API + '/' + Constants.FIELD_TYPES;
     }
 
+    static getDefinitionsUrl() {
+        return Constants.DEFINITIONS;
+    }
+
     static getDefinitionUrl(entityName: string) {
         return Constants.DEFINITIONS + '/' + entityName;
     }

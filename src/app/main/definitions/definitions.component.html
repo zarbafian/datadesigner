@@ -2,17 +2,34 @@
   <div class="entity-definitions">
     <!-- Entity definitions -->
     <mat-list>
-      <mat-list-item *ngFor="let entityDef of definitions" (click)="selectEntityDefinition(entityDef)" [class.entity-definition]="true"
-        [class.selected-entity]="selectedDefinition && (entityDef.name === selectedDefinition.name)">
-        {{entityDef.name}}</mat-list-item>
+      <mat-list-item *ngFor="let entityDef of definitions" [class.entity-definition]="true" [class.selected-entity]="selectedDefinition && (entityDef.name === selectedDefinition.name)">
+        <span (click)="selectEntityDefinition(entityDef)">
+          {{entityDef.name}}
+        </span>
+        <mat-icon (click)="deleteDefinition(entityDef)" [class.entity-deletion]="true">delete</mat-icon>
+      </mat-list-item>
+      <mat-list-item>
+        <!-- Add mode -->
+        <mat-chip-list>
+          <mat-chip color="primary" selected="true" *ngIf="!creationMode" (click)="enableCreateMode()" [class.entity-creation]="true">
+            <mat-icon>add</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+        <!-- Creation mode -->
+        <mat-form-field *ngIf="creationMode" floatPlaceholder="never">
+          <div class="eighty-pc">
+            <input matInput #entityname [(value)]="newEntityDefName" placeholder="Enter the name" (keyup)="updateName(entityname.value)">
+          </div>
+          <div class="twenty-pc">
+            <mat-icon (click)="saveNewDefinition()" [class.entity-creation]="true">save</mat-icon>
+          </div>
+        </mat-form-field>
+      </mat-list-item>
     </mat-list>
   </div>
 
   <div class="fields-definitions" *ngIf="selectedDefinition">
     <!-- Entity definition editor -->
-    <field-definition-editor 
-    *ngFor="let field of selectedDefinition.fields" 
-    [entity]="selectedDefinition.name"
-    [field]="field"></field-definition-editor>
+    <field-definition-editor *ngFor="let field of selectedDefinition.fields" [entity]="selectedDefinition.name" [field]="field"></field-definition-editor>
   </div>
 </div>

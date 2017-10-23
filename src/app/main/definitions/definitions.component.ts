@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import {FormControl, Validators} from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 
 import { DefinitionsService } from '../../service/definitions.service';
 
@@ -17,6 +17,10 @@ const LOGGER: Logger = Logger.getLogger();
 })
 export class DefinitionsComponent implements OnInit {
 
+  private creationMode: boolean = false;
+
+  private newEntityDefName: string = '';
+
   private definitions: EntityDefinition[] = [];
 
   private selectedDefinition: EntityDefinition;
@@ -31,8 +35,67 @@ export class DefinitionsComponent implements OnInit {
     this.definitionsService
       .getDefinitions()
       .subscribe(
-        data => this.definitions = data
+      data => this.definitions = data
       );
+  }
+
+  enableCreateMode() {
+    this.creationMode = true;
+  }
+
+  updateName(newName: string) {
+    this.newEntityDefName = newName;
+  }
+
+  deleteDefinition(entityDef: EntityDefinition) {
+    
+    LOGGER.debug('DefinitionsComponent.deleteDefinition: ' + entityDef.name);
+
+    let nameToDelete = entityDef.name;
+
+    this.definitionsService
+      .deleteEntityDefinition(entityDef)
+      .subscribe(
+        data => {
+          LOGGER.debug('deletion successfull: ' + data);
+          let indexToDelete: number = -1;
+          for(let i=0; i<this.definitions.length; i++) {
+            if(nameToDelete === this.definitions[i].name) {
+              indexToDelete = i;
+              break;
+            }
+          }
+          if(indexToDelete === -1) {
+            LOGGER.debug('deleted element could not be found in list: ' + nameToDelete);
+          }
+          else {
+            LOGGER.debug('index to delete is: ' + indexToDelete);
+            this.definitions.splice(indexToDelete, 1);
+          }
+        },
+        error => {
+          LOGGER.debug('deletion error: ' + error);
+        }
+      )
+  }
+  saveNewDefinition() {
+
+    LOGGER.debug('DefinitionsComponent.saveNewDefinition - name: ' + this.newEntityDefName);
+
+    let newName = this.newEntityDefName;
+
+    this.definitionsService
+      .createNewDefinition(newName)
+      .subscribe(
+      data => {
+        LOGGER.debug('create successful: ' + data);
+        this.definitions.push(data);
+        this.creationMode = false;
+      },
+      error => {
+        LOGGER.debug('create error: ' + error);
+      });
+
   }
 
   selectEntityDefinition(entityDef: EntityDefinition) {
@@ -41,9 +104,9 @@ export class DefinitionsComponent implements OnInit {
     this.definitionsService
       .loadEntityDefinition(this.selectedDefinition)
       .subscribe(
-        data => {
-          this.selectedDefinition = data;
-        }
+      data => {
+        this.selectedDefinition = data;
+      }
       );
   }
 
