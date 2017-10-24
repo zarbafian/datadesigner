@@ -6,6 +6,7 @@ import { DefinitionsService } from '../../service/definitions.service';
 
 import { EntityDefinition } from '../../data/EntityDefinition';
 import { FieldDefinition } from '../../data/FieldDefinition';
+import { FieldType } from '../../data/FieldType';
 
 import { Logger } from '../../util/Logger';
 const LOGGER: Logger = Logger.getLogger();
@@ -17,9 +18,13 @@ const LOGGER: Logger = Logger.getLogger();
 })
 export class DefinitionsComponent implements OnInit {
 
-  private creationMode: boolean = false;
+  private entityCreationMode: boolean = false;
+  
+  private fieldCreationMode: boolean = false;
 
-  private newEntityDefName: string = '';
+  private newEntityName: string = '';
+  private newFieldName: string = '';
+  private newFieldType: FieldType;
 
   private definitions: EntityDefinition[] = [];
 
@@ -39,13 +44,18 @@ export class DefinitionsComponent implements OnInit {
       );
   }
 
-  enableCreateMode() {
-    this.creationMode = true;
+  enableEntityCreateMode() {
+    this.entityCreationMode = true;
   }
 
-  updateName(newName: string) {
+  enableFieldCreateMode() {
+    LOGGER.debug('enableFieldCreateMode: ' + this.fieldCreationMode);
+    this.fieldCreationMode = true;
+  }
+
+  updateEntityName(newName: string) {
     //LOGGER.debug('updateName:[' + newName + ']');
-    this.newEntityDefName = newName;
+    this.newEntityName = newName;
   }
 
   deleteDefinition(entityDef: EntityDefinition) {
@@ -70,7 +80,7 @@ export class DefinitionsComponent implements OnInit {
             LOGGER.debug('deleted element could not be found in list: ' + nameToDelete);
           }
           else {
-            LOGGER.debug('index to delete is: ' + indexToDelete);
+            LOGGER.debug('found index to delete: ' + indexToDelete);
             this.definitions.splice(indexToDelete, 1);
           }
         },
@@ -81,9 +91,9 @@ export class DefinitionsComponent implements OnInit {
   }
   saveNewDefinition() {
 
-    LOGGER.debug('DefinitionsComponent.saveNewDefinition - name: ' + this.newEntityDefName);
+    LOGGER.debug('DefinitionsComponent.saveNewDefinition - name: ' + this.newEntityName);
 
-    let newName = this.newEntityDefName;
+    let newName = this.newEntityName;
 
     this.definitionsService
       .createNewDefinition(newName)
@@ -91,7 +101,7 @@ export class DefinitionsComponent implements OnInit {
       data => {
         LOGGER.debug('create successful: ' + data);
         this.definitions.push(data);
-        this.creationMode = false;
+        this.entityCreationMode = false;
       },
       error => {
         LOGGER.debug('create error: ' + error);
@@ -113,5 +123,32 @@ export class DefinitionsComponent implements OnInit {
 
   saveName(newName: string) {
     LOGGER.debug('new name: ' + newName);
+  }
+
+  onFieldCreated(fieldDefinition) {
+    this.fieldCreationMode = false;
+    this.selectedDefinition.fields.push(fieldDefinition);
+  }
+  onFieldCreationCanceled() {
+    this.fieldCreationMode = false;
+  }
+
+  onFieldDeleted(fieldDefinition) {
+
+    let nameToDelete = fieldDefinition.name;
+    let indexToDelete: number = -1;
+    for(let i=0; i<this.selectedDefinition.fields.length; i++) {
+      if(nameToDelete === this.selectedDefinition.fields[i].name) {
+        indexToDelete = i;
+        break;
+      }
+    }
+    if(indexToDelete === -1) {
+      LOGGER.debug('deleted element could not be found in list: ' + nameToDelete);
+    }
+    else {
+      LOGGER.debug('found index to delete: ' + indexToDelete);
+      this.selectedDefinition.fields.splice(indexToDelete, 1);
+    }
   }
 }

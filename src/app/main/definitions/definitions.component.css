@@ -1,10 +1,18 @@
-.entity-creation {
+.field-creation {
     cursor: pointer;
+}
+.field-creation:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 10px 2px #999999;
 }
 .entity-deletion {
     cursor: pointer;
 }
+.entity-creation {
+    cursor: pointer;
+}
 .entity-creation:hover {
+    cursor: pointer;
     box-shadow: 0px 0px 10px 2px #999999;
 }
 .entity-definition {

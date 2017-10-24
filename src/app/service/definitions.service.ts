@@ -81,7 +81,7 @@ export class DefinitionsService {
 
   deleteEntityDefinition(entityDef: EntityDefinition): Observable<void> {
 
-    LOGGER.debug('deleteEntityDefinition.createNewDefinition: ' + entityDef.name);
+    LOGGER.debug('DefinitionsService.deleteEntityDefinition: ' + entityDef.name);
 
     return this.http
       .delete(
@@ -98,6 +98,26 @@ export class DefinitionsService {
       }
       );
   }
+  createFieldDefinition(entityDef: string, newData: FieldDefinition): Observable<FieldDefinition> {
+
+    LOGGER.debug('DefinitionsService.createFieldDefinition: ' + entityDef);
+
+    return this.http
+      .post(
+      Constants.getFieldsUrl(entityDef),
+      newData
+      )
+      .map(
+      resp => {
+        if (resp.status == 200) {
+          return resp.json();
+        }
+        else {
+          throw new Error(resp.statusText);
+        }
+      });
+  }
+
   updateFieldDefinition(entityDef: string, fieldDef: string, newData: FieldDefinition): Observable<FieldDefinition> {
 
     LOGGER.debug('DefinitionsService.updateFieldDefinition: ' + entityDef);
@@ -117,4 +137,25 @@ export class DefinitionsService {
         }
       });
   }
+  
+  deleteFieldDefinition(entityDef: string, field: string): Observable<void> {
+    
+        LOGGER.debug('deleteFieldDefinition.deleteFieldDefinition: ' + entityDef + '.' + field);
+    
+        return this.http
+          .delete(
+          Constants.getFieldUrl(entityDef, field)
+          )
+          .map(
+          resp => {
+            if (resp.status == 204) {
+              return;
+            }
+            else {
+              throw new Error(resp.statusText);
+            }
+          }
+          );
+      }
+      
 }

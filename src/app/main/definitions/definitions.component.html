@@ -1,5 +1,6 @@
 <div>
   <div class="entity-definitions">
+
     <!-- Entity definitions -->
     <mat-list>
       <mat-list-item *ngFor="let entityDef of definitions" [class.entity-definition]="true" [class.selected-entity]="selectedDefinition && (entityDef.name === selectedDefinition.name)">
@@ -9,16 +10,20 @@
         <mat-icon (click)="deleteDefinition(entityDef)" [class.entity-deletion]="true">delete</mat-icon>
       </mat-list-item>
       <mat-list-item>
+
         <!-- Add mode -->
         <mat-chip-list>
-          <mat-chip color="primary" selected="true" *ngIf="!creationMode" (click)="enableCreateMode()" [class.entity-creation]="true">
+          <mat-chip color="primary" selected="true" *ngIf="!entityCreationMode" (click)="enableEntityCreateMode()" [class.entity-creation]="true">
+            Add Entity
             <mat-icon>add</mat-icon>
           </mat-chip>
         </mat-chip-list>
+
         <!-- Creation mode -->
-        <mat-form-field *ngIf="creationMode" floatPlaceholder="never">
+        <mat-form-field *ngIf="entityCreationMode" floatPlaceholder="never">
           <div class="eighty-pc">
-            <input matInput #entityname [(value)]="newEntityDefName" placeholder="Enter the name" (keyup)="updateName(entityname.value)" (keyup.enter)="saveNewDefinition()">
+            <input matInput #entityname [(value)]="newEntityName" placeholder="Enter the name" (keyup)="updateEntityName(entityname.value)"
+              (keyup.enter)="saveNewDefinition()">
           </div>
           <div class="twenty-pc">
             <mat-icon (click)="saveNewDefinition()" [class.entity-creation]="true">save</mat-icon>
@@ -29,7 +34,26 @@
   </div>
 
   <div class="fields-definitions" *ngIf="selectedDefinition">
+
     <!-- Entity definition editor -->
-    <field-definition-editor *ngFor="let field of selectedDefinition.fields" [entity]="selectedDefinition.name" [field]="field"></field-definition-editor>
+    <field-definition-editor *ngFor="let field of selectedDefinition.fields"
+                            [entity]="selectedDefinition.name"
+                            [field]="field"
+                            (onFieldDeleted)="onFieldDeleted($event)"></field-definition-editor>
+    
+    <!-- New field creation -->
+    <field-definition-editor *ngIf="fieldCreationMode" 
+                            [entity]="selectedDefinition.name"
+                            (onFieldCreated)="onFieldCreated($event)"
+                            (onFieldCreationCanceled)="onFieldCreationCanceled()"></field-definition-editor>
+    
+    <!-- Add mode -->
+    <mat-chip-list>
+      <mat-chip color="primary" selected="true" (click)="enableFieldCreateMode()" [class.field-creation]="true">
+        Add Field
+        <mat-icon>add</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+
   </div>
 </div>

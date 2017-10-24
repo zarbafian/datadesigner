@@ -1,11 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { FormControl, Validators } from '@angular/forms';
 
 import { DefinitionsService } from '../../service/definitions.service';
 
 import { FieldDefinition } from '../../data/FieldDefinition';
-import { FieldType } from 'app/data/FieldType';
+import { FieldType } from '../../data/FieldType';
+
+import { Constants } from '../../util/Constants';
 
 import { Logger } from '../../util/Logger';
 const LOGGER: Logger = Logger.getLogger();
@@ -23,10 +25,19 @@ export class FieldDefinitionEditorComponent implements OnInit {
   @Input()
   private field: FieldDefinition;
 
-  private fieldNameExists: boolean = false;
+  @Output()
+  private onFieldCreated = new EventEmitter<FieldDefinition>();
+
+  @Output()
+  private onFieldDeleted = new EventEmitter<FieldDefinition>();
+
+  @Output()
+  private onFieldCreationCanceled = new EventEmitter<void>();
 
   private editedName: string;
   private editedType: string;
+
+  private unsavedField: boolean = false;
 
   private fieldTypes: FieldType[];
   
@@ -40,11 +51,34 @@ export class FieldDefinitionEditorComponent implements OnInit {
     this.fieldNameControl = new FormControl('', [
       Validators.minLength(1)
     ]);
-    this.editedName = this.field.name;
-    this.editedType = this.field.fieldType.key;
+
+    if(!this.field) {
+      LOGGER.debug('Field create mode');
+      this.unsavedField = true;
+      this.editedName = '';
+    }
+    else {
+      LOGGER.debug('Field update mode');
+      this.unsavedField = false;
+      this.editedName = this.field.name;
+      this.editedType = this.field.fieldType.key;
+    }
+
     this.definitionsService
       .getFieldTypes()
-      .subscribe(data => this.fieldTypes = data);
+      .subscribe(data => {
+        this.fieldTypes = data;
+
+        if(this.unsavedField) {
+          // Initialize type
+          for(let ft of this.fieldTypes) {
+            if(Constants.FIELD_TYPE_TEXT === ft.key) {
+              this.editedType = ft.key;
+              break;
+            }
+          }
+        }
+      });
   }
 
   updateName(newName: string) {
@@ -58,18 +92,51 @@ export class FieldDefinitionEditorComponent implements OnInit {
     newData.fieldType = new FieldType();
     newData.fieldType.key = this.editedType;
 
-    this.definitionsService
-      .updateFieldDefinition(this.entity, this.field.name, newData)
-      .subscribe(
-      data => {
-        LOGGER.debug('update - name: ' + data.name + ', ' + data.fieldType.key);
-        //this.field = data;
-      },
-      error => {
-        LOGGER.debug('error: ' + error);
-        this.fieldNameExists = true;
-        //this.editedName = this.field.name;
-        //this.editedType = this.field.type;
-      });
+    if(this.unsavedField) {
+      this.definitionsService
+        .createFieldDefinition(this.entity, newData)
+        .subscribe(
+        data => {
+          LOGGER.debug('create successful - name: ' + data.name + ', ' + data.fieldType.key);
+          this.onFieldCreated.emit(data);
+        },
+        error => {
+          LOGGER.debug('create error: ' + error);
+        });
+    }
+    else {
+      this.definitionsService
+        .updateFieldDefinition(this.entity, this.field.name, newData)
+        .subscribe(
+        data => {
+          LOGGER.debug('update successful - name: ' + data.name + ', ' + data.fieldType.key);
+        },
+        error => {
+          LOGGER.debug('update error: ' + error);
+        });
+    }
+  }
+
+  deleteField() {
+    LOGGER.debug('deleteField - name: ' + (this.field?this.field.name:'[unsaved]'));
+
+    if(this.unsavedField) {
+      this.onFieldCreationCanceled.emit();
+    }
+    else {
+      let tmpFieldData = this.field;
+
+      this.definitionsService
+        .deleteFieldDefinition(this.entity, this.field.name)
+        .subscribe(
+          data => {
+            LOGGER.debug('deletion successfull: ' + data);
+            this.onFieldDeleted.emit(tmpFieldData);
+          },
+          error => {
+            LOGGER.debug('deletion error: ' + error);
+          }
+        );
+    }
   }
 }

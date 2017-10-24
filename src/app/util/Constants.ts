@@ -1,5 +1,8 @@
 export class Constants {
 
+    // Field types
+    static FIELD_TYPE_TEXT = 'text';
+
     // Server URL
     static SERVER = 'http://localhost:8080';
 

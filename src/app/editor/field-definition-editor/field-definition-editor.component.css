@@ -1,3 +1,6 @@
 .save-field {
     cursor: pointer;
 }
+.delete-field {
+    cursor: pointer;
+}
