@@ -69,6 +69,11 @@ export class DefinitionsComponent implements OnInit {
       .subscribe(
         data => {
           LOGGER.debug('deletion successfull: ' + data);
+
+          if(nameToDelete === this.selectedDefinition.name) {
+            this.selectedDefinition = null;
+          }
+
           let indexToDelete: number = -1;
           for(let i=0; i<this.definitions.length; i++) {
             if(nameToDelete === this.definitions[i].name) {
