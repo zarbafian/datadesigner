@@ -1,7 +1,8 @@
-import { FieldType } from 'app/data/FieldType';
+import { FieldType } from './FieldType';
 
 export class FieldDefinition {
     name: string;
     fieldType: FieldType;
+    targetEntity: string;
   }
   

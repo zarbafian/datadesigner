@@ -1,4 +1,4 @@
-<mat-grid-list cols="5" rowHeight="50px">
+<mat-grid-list cols="7" rowHeight="50px">
   <mat-grid-tile colspan="2">
     <mat-form-field>
       <input #fieldname matInput [formControl]="fieldNameControl" (keyup)="updateName(fieldname.value)" [(value)]="editedName">
@@ -6,12 +6,20 @@
   </mat-grid-tile>
   <mat-grid-tile colspan="2">
     <mat-form-field floatPlaceholder="never">
-      <mat-select placeholder="Select data type" [(ngModel)]="editedType">
+      <mat-select placeholder="Select data type" [(ngModel)]="editedType" #typeselect="matSelect">
+        <mat-select-trigger>{{ triggerFieldTypeSelection(typeselect.selected?.value, typeselect.selected?.viewValue) }}</mat-select-trigger>
         <mat-option *ngFor="let fieldType of fieldTypes" [value]="fieldType.key">
           {{ fieldType.label }}
         </mat-option>
       </mat-select>
     </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="2">
+    <mat-select  *ngIf="entitySelectionMode" placeholder="Select entity" [(ngModel)]="selectedEntity" #entityselect="matSelect">
+      <mat-option *ngFor="let entityDefinition of entityDefinitions" [value]="entityDefinition.name">
+        {{ entityDefinition.name }}
+      </mat-option>
+    </mat-select>
   </mat-grid-tile>
   <mat-grid-tile colspan="1">
     <mat-icon class="save-field" (click)="saveField()">save</mat-icon>

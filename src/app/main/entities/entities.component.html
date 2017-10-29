@@ -1,0 +1,22 @@
+<div class="definitions-list">
+  <!-- Entity definitions -->
+  <mat-list>
+    <mat-list-item *ngFor="let entityDef of definitions" [class.rd-btn]="true" [class.selected-entity]="selectedDefinition && (entityDef.name === selectedDefinition.name)">
+      <span (click)="selectEntityDefinition(entityDef)">
+        {{entityDef.name}}
+      </span>
+    </mat-list-item>
+  </mat-list>
+</div>
+<div class="entities-list">
+  <mat-list>
+    <mat-list-item *ngFor="let entity of entities" [class.rd-btn]="true" [class.selected-entity]="selectedEntity && (entity.id === selectedEntity.id)">
+      <span (click)="selectEntity(entity)">
+        {{entity.name}}
+      </span>
+    </mat-list-item>
+  </mat-list>
+</div>
+<div class="entity-editor">
+  The editor
+</div>

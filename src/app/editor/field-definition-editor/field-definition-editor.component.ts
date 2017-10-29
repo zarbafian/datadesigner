@@ -5,6 +5,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { DefinitionsService } from '../../service/definitions.service';
 
 import { FieldDefinition } from '../../data/FieldDefinition';
+import { EntityDefinition } from '../../data/EntityDefinition';
 import { FieldType } from '../../data/FieldType';
 
 import { Constants } from '../../util/Constants';
@@ -40,7 +41,11 @@ export class FieldDefinitionEditorComponent implements OnInit {
   private unsavedField: boolean = false;
 
   private fieldTypes: FieldType[];
-  
+
+  private entitySelectionMode: boolean = false;
+  private selectedEntity: string;
+  private entityDefinitions: EntityDefinition[];
+
   fieldNameControl;
 
   constructor(
@@ -52,7 +57,7 @@ export class FieldDefinitionEditorComponent implements OnInit {
       Validators.minLength(1)
     ]);
 
-    if(!this.field) {
+    if (!this.field) {
       LOGGER.debug('Field create mode');
       this.unsavedField = true;
       this.editedName = '';
@@ -62,22 +67,33 @@ export class FieldDefinitionEditorComponent implements OnInit {
       this.unsavedField = false;
       this.editedName = this.field.name;
       this.editedType = this.field.fieldType.key;
+      if(this.field.fieldType.key === Constants.FIELD_TYPE_ENTITY) {
+        this.selectedEntity = this.field.targetEntity;
+      }
     }
 
+    // Load field types
     this.definitionsService
       .getFieldTypes()
       .subscribe(data => {
         this.fieldTypes = data;
 
-        if(this.unsavedField) {
+        if (this.unsavedField) {
           // Initialize type
-          for(let ft of this.fieldTypes) {
-            if(Constants.FIELD_TYPE_TEXT === ft.key) {
+          for (let ft of this.fieldTypes) {
+            if (Constants.FIELD_TYPE_TEXT === ft.key) {
               this.editedType = ft.key;
               break;
             }
           }
         }
+      });
+
+    // Load entity definitions
+    this.definitionsService
+      .getDefinitions()
+      .subscribe(data => {
+        this.entityDefinitions = data;
       });
   }
 
@@ -92,12 +108,17 @@ export class FieldDefinitionEditorComponent implements OnInit {
     newData.fieldType = new FieldType();
     newData.fieldType.key = this.editedType;
 
-    if(this.unsavedField) {
+    if(newData.fieldType.key === Constants.FIELD_TYPE_ENTITY) {
+      newData.targetEntity = this.selectedEntity;
+    }
+
+    if (this.unsavedField) {
       this.definitionsService
         .createFieldDefinition(this.entity, newData)
         .subscribe(
         data => {
           LOGGER.debug('create successful - name: ' + data.name + ', ' + data.fieldType.key);
+          this.field = data;
           this.onFieldCreated.emit(data);
         },
         error => {
@@ -110,6 +131,7 @@ export class FieldDefinitionEditorComponent implements OnInit {
         .subscribe(
         data => {
           LOGGER.debug('update successful - name: ' + data.name + ', ' + data.fieldType.key);
+          this.field = data;
         },
         error => {
           LOGGER.debug('update error: ' + error);
@@ -118,9 +140,9 @@ export class FieldDefinitionEditorComponent implements OnInit {
   }
 
   deleteField() {
-    LOGGER.debug('deleteField - name: ' + (this.field?this.field.name:'[unsaved]'));
+    LOGGER.debug('deleteField - name: ' + (this.field ? this.field.name : '[unsaved]'));
 
-    if(this.unsavedField) {
+    if (this.unsavedField) {
       this.onFieldCreationCanceled.emit();
     }
     else {
@@ -129,14 +151,29 @@ export class FieldDefinitionEditorComponent implements OnInit {
       this.definitionsService
         .deleteFieldDefinition(this.entity, this.field.name)
         .subscribe(
-          data => {
-            LOGGER.debug('deletion successfull: ' + data);
-            this.onFieldDeleted.emit(tmpFieldData);
-          },
-          error => {
-            LOGGER.debug('deletion error: ' + error);
-          }
+        data => {
+          LOGGER.debug('deletion successfull: ' + data);
+          this.onFieldDeleted.emit(tmpFieldData);
+        },
+        error => {
+          LOGGER.debug('deletion error: ' + error);
+        }
         );
+    }
+  }
+
+  triggerFieldTypeSelection(keyValue, viewValue) {
+
+    if (viewValue) {
+      if (keyValue === Constants.FIELD_TYPE_ENTITY) {
+        LOGGER.debug('entity selected');
+        this.entitySelectionMode = true;
+      }
+      else {
+        LOGGER.debug('entity deselected');
+        this.entitySelectionMode = false;
+      }
+      return viewValue;
     }
   }
 }

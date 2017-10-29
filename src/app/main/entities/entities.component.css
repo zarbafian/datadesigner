@@ -1,0 +1,18 @@
+.definitions-list {
+    display: inline-block;
+    height: 100%;
+    width: 25%;
+}
+.entities-list {
+    display: inline-block;
+    height: 100%;
+    width: 25%;
+}
+.entity-editor {
+    display: inline-block;
+    height: 100%;
+    width: 48%;
+}
+.selected-entity {
+    background-color: #EEEEEE;
+}

@@ -2,7 +2,8 @@ export class Constants {
 
     // Field types
     static FIELD_TYPE_TEXT = 'text';
-
+    static FIELD_TYPE_ENTITY = 'entity';
+    
     // Server URL
     static SERVER = 'http://localhost:8080';
 
@@ -20,6 +21,9 @@ export class Constants {
     static FIELDS = '/fields';
     static FIELD_TYPES = '/fieldtypes';
 
+    static ENTITIES = Constants.API + '/entities';
+    static PARAMETER_TYPE = 'type';
+    
     static getFielsTypesUrl() {
         return Constants.API + '/' + Constants.FIELD_TYPES;
     }
@@ -38,5 +42,10 @@ export class Constants {
     
     static getFieldUrl(entityName: string, fieldName: string) {
         return Constants.DEFINITIONS + '/' + entityName + Constants.FIELDS + '/' + fieldName;
+    }
+
+    // ENTITIES
+    static getEntityType(type: string) {
+        return Constants.ENTITIES + '?' + Constants.PARAMETER_TYPE + '=' + type;
     }
 }

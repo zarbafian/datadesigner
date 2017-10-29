@@ -3,17 +3,17 @@
 
     <!-- Entity definitions -->
     <mat-list>
-      <mat-list-item *ngFor="let entityDef of definitions" [class.entity-definition]="true" [class.selected-entity]="selectedDefinition && (entityDef.name === selectedDefinition.name)">
+      <mat-list-item *ngFor="let entityDef of definitions" [class.rd-btn]="true" [class.selected-entity]="selectedDefinition && (entityDef.name === selectedDefinition.name)">
         <span (click)="selectEntityDefinition(entityDef)">
           {{entityDef.name}}
         </span>
-        <mat-icon (click)="deleteDefinition(entityDef)" [class.entity-deletion]="true">delete</mat-icon>
+        <mat-icon (click)="deleteDefinition(entityDef)" [class.rd-btn]="true">delete</mat-icon>
       </mat-list-item>
       <mat-list-item>
 
         <!-- Add mode -->
         <mat-chip-list>
-          <mat-chip color="primary" selected="true" *ngIf="!entityCreationMode" (click)="enableEntityCreateMode()" [class.entity-creation]="true">
+          <mat-chip color="primary" selected="true" *ngIf="!entityCreationMode" (click)="enableEntityCreateMode()" [class.rd-btn]="true">
             Add Entity
             <mat-icon>add</mat-icon>
           </mat-chip>
@@ -26,7 +26,7 @@
               (keyup.enter)="saveNewDefinition()">
           </div>
           <div class="twenty-pc">
-            <mat-icon (click)="saveNewDefinition()" [class.entity-creation]="true">save</mat-icon>
+            <mat-icon (click)="saveNewDefinition()" [class.rd-btn]="true">save</mat-icon>
           </div>
         </mat-form-field>
       </mat-list-item>
@@ -49,7 +49,7 @@
     
     <!-- Add mode -->
     <mat-chip-list>
-      <mat-chip color="primary" selected="true" (click)="enableFieldCreateMode()" [class.field-creation]="true">
+      <mat-chip color="primary" selected="true" (click)="enableFieldCreateMode()" [class.rd-btn]="true">
         Add Field
         <mat-icon>add</mat-icon>
       </mat-chip>

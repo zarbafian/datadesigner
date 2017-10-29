@@ -70,7 +70,7 @@ export class DefinitionsComponent implements OnInit {
         data => {
           LOGGER.debug('deletion successfull: ' + data);
 
-          if(nameToDelete === this.selectedDefinition.name) {
+          if( this.selectedDefinition && ( nameToDelete === this.selectedDefinition.name) ) {
             this.selectedDefinition = null;
           }
 
@@ -107,6 +107,9 @@ export class DefinitionsComponent implements OnInit {
         LOGGER.debug('create successful: ' + data);
         this.definitions.push(data);
         this.entityCreationMode = false;
+        this.selectedDefinition = data;
+
+        this.newEntityName = '';
       },
       error => {
         LOGGER.debug('create error: ' + error);

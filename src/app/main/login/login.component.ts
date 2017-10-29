@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit(){
         if(Config.isDevMode()) {
-            //this.onSubmitLogin();
+            this.onSubmitLogin();
         }
     }
 }

@@ -1,2 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+.rd-btn:hover {
+    cursor: pointer !important;
+    box-shadow: 0px 0px 10px 2px #999999;
+}

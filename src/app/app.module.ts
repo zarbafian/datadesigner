@@ -18,10 +18,12 @@ import { AuthRequestOptions } from './service/AuthRequestOptions';
 
 import { LoginService } from './service/login.service';
 import { DefinitionsService } from './service/definitions.service';
+import { EntitiesService } from './service/entities.service';
 import { HomeComponent } from './main/home/home.component';
 import { LoginComponent } from './main/login/login.component';
 import { DefinitionsComponent } from './main/definitions/definitions.component';
 import { FieldDefinitionEditorComponent } from './editor/field-definition-editor/field-definition-editor.component';
+import { EntitiesComponent } from './main/entities/entities.component';
 
 const appRoutes: Routes = [
   { path: 'signin', component: LoginComponent },
@@ -40,6 +42,7 @@ const appRoutes: Routes = [
     LoginComponent,
     DefinitionsComponent,
     FieldDefinitionEditorComponent,
+    EntitiesComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +60,7 @@ const appRoutes: Routes = [
   providers: [
     LoginService,
     DefinitionsService,
+    EntitiesService,
     { provide: RequestOptions, useClass: AuthRequestOptions},
   ],
   bootstrap: [AppComponent]
