@@ -1,9 +1,9 @@
 //import { FieldType } from './FieldType';
 
 export class Field {
-    //name: string;
+    name: string;
+    value: any;
     //fieldType: FieldType;
     //targetEntity: string;
-    value: any;
   }
   

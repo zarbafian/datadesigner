@@ -24,6 +24,7 @@ import { LoginComponent } from './main/login/login.component';
 import { DefinitionsComponent } from './main/definitions/definitions.component';
 import { FieldDefinitionEditorComponent } from './editor/field-definition-editor/field-definition-editor.component';
 import { EntitiesComponent } from './main/entities/entities.component';
+import { EntityEditorComponent } from './editor/entity-editor/entity-editor.component';
 
 const appRoutes: Routes = [
   { path: 'signin', component: LoginComponent },
@@ -43,6 +44,7 @@ const appRoutes: Routes = [
     DefinitionsComponent,
     FieldDefinitionEditorComponent,
     EntitiesComponent,
+    EntityEditorComponent,
   ],
   imports: [
     BrowserModule,

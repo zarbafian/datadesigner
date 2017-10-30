@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { Router /*, ActivatedRoute, ParamMap*/ } from '@angular/router';
 
+import { MatTab /*, ActivatedRoute, ParamMap*/ } from '@angular/material';
+
 import { LoginService } from '../../service/login.service';
 
-import { Logger } from '../../util/Logger';
+import { EntitiesComponent } from '../entities/entities.component';
 
+import { Logger } from '../../util/Logger';
 const LOGGER: Logger = Logger.getLogger();
 
 @Component({
@@ -15,11 +18,27 @@ const LOGGER: Logger = Logger.getLogger();
 })
 export class HomeComponent implements OnInit {
 
+  @ViewChild('definitionsTab')
+  private definitionsTab: MatTab;
+
+  @ViewChild('entitiesTab')
+  private entitiesTab: MatTab;
+
+  @ViewChild(EntitiesComponent)
+  private entitiesComponent: EntitiesComponent;
+
   constructor(
     private loginService: LoginService,
     private router: Router
   ) { }
 
+  onTabChanged() {
+    LOGGER.debug('HomeComponent.onTabChanged');
+    if(this.entitiesTab.isActive) {
+      LOGGER.debug('Re-init entities components');
+      this.entitiesComponent.ngOnInit();
+    }
+  }
   ngOnInit() {
     LOGGER.debug('HomeComponent.ngOnInit');
   }

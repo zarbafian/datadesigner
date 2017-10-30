@@ -5,6 +5,7 @@ import { EntitiesService } from '../../service/entities.service';
 
 import { EntityDefinition } from '../../data/EntityDefinition';
 import { Entity } from '../../data/Entity';
+import { Field } from '../../data/Field';
 
 import { Logger } from '../../util/Logger';
 const LOGGER: Logger = Logger.getLogger();
@@ -40,17 +41,27 @@ export class EntitiesComponent implements OnInit {
   selectEntityDefinition(entityDef: EntityDefinition) {
     LOGGER.debug('EntitiesComponent.selectEntityDefinition: ' + entityDef.name);
     this.selectedDefinition = entityDef;
+    this.selectedEntity = null;
     this.entitiesService
-      .getEntitiesOfType(this.selectedDefinition.name)
-      .subscribe(
-      data => {
-        this.entities = data;
-      }
-      );
+    .getEntitiesOfType(this.selectedDefinition.name)
+    .subscribe(
+      data => 
+      this.entities = data
+    );
   }
-
+  
   selectEntity(entity: Entity) {
     LOGGER.debug('EntitiesComponent.selectEntity: ' + entity.id);
     this.selectedEntity = entity;
+    this.initFields(this.selectedEntity);
+  }
+  initFields(entity: Entity) {
+    entity.fields = [];
+    for(let key in entity.data) {
+      let field = new Field();
+      field.name = key;
+      field.value = entity.data[key];
+      entity.fields.push(field);
+    }
   }
 }

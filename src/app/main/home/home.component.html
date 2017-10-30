@@ -1,12 +1,12 @@
-<mat-tab-group>
-    <mat-tab label="Data Model">
+<mat-tab-group (selectedTabChange)="onTabChanged()">
+    <mat-tab #definitionsTab label="Data Model">
         <app-definitions></app-definitions>
     </mat-tab>
-    <mat-tab label="Entities">
+    <mat-tab #entitiesTab label="Entities" >
         <app-entities></app-entities>
     </mat-tab>
 </mat-tab-group>
-
+<!--
 <br/>
 <br/>
 <br/>
@@ -18,3 +18,4 @@
 
 <br/>
 <button mat-raised-button (click)="principal()">principal</button>
+-->
