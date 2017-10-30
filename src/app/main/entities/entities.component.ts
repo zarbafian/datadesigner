@@ -7,6 +7,8 @@ import { EntityDefinition } from '../../data/EntityDefinition';
 import { Entity } from '../../data/Entity';
 import { Field } from '../../data/Field';
 
+import { TextFieldComponent } from '../../fields/text-field/text-field.component';
+
 import { Logger } from '../../util/Logger';
 const LOGGER: Logger = Logger.getLogger();
 
@@ -52,15 +54,15 @@ export class EntitiesComponent implements OnInit {
   
   selectEntity(entity: Entity) {
     LOGGER.debug('EntitiesComponent.selectEntity: ' + entity.id);
+    this.initFields(this.selectedDefinition, entity);
     this.selectedEntity = entity;
-    this.initFields(this.selectedEntity);
   }
-  initFields(entity: Entity) {
+  initFields(entityDefinition: EntityDefinition, entity: Entity) {
     entity.fields = [];
     for(let key in entity.data) {
-      let field = new Field();
-      field.name = key;
-      field.value = entity.data[key];
+      let field = new Field(TextFieldComponent, key, entity.data[key]);
+      //field.name = key;
+      //field.value = entity.data[key];
       entity.fields.push(field);
     }
   }
