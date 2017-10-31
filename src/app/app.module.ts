@@ -29,6 +29,14 @@ import { FieldDirective } from './fields/field.directive';
 import { FieldComponent } from './fields/field/field.component';
 
 import { TextFieldComponent } from './fields/text-field/text-field.component';
+import { YesnoFieldComponent } from './fields/yesno-field/yesno-field.component';
+import { ParagraphFieldComponent } from './fields/paragraph-field/paragraph-field.component';
+import { DecimalFieldComponent } from './fields/decimal-field/decimal-field.component';
+import { IntegerFieldComponent } from './fields/integer-field/integer-field.component';
+import { FileFieldComponent } from './fields/file-field/file-field.component';
+import { EntityFieldComponent } from './fields/entity-field/entity-field.component';
+import { DateFieldComponent } from './fields/date-field/date-field.component';
+import { DatetimeFieldComponent } from './fields/datetime-field/datetime-field.component';
 
 const appRoutes: Routes = [
   { path: 'signin', component: LoginComponent },
@@ -52,9 +60,25 @@ const appRoutes: Routes = [
     FieldDirective,
     FieldComponent,
     TextFieldComponent,
+    YesnoFieldComponent,
+    ParagraphFieldComponent,
+    DecimalFieldComponent,
+    IntegerFieldComponent,
+    FileFieldComponent,
+    EntityFieldComponent,
+    DateFieldComponent,
+    DatetimeFieldComponent,
   ],
   entryComponents: [
-    TextFieldComponent
+    TextFieldComponent,
+    YesnoFieldComponent,
+    ParagraphFieldComponent,
+    DecimalFieldComponent,
+    IntegerFieldComponent,
+    FileFieldComponent,
+    EntityFieldComponent,
+    DateFieldComponent,
+    DatetimeFieldComponent
   ],
   imports: [
     BrowserModule,

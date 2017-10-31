@@ -7,7 +7,7 @@ import { EntityDefinition } from '../../data/EntityDefinition';
 import { Entity } from '../../data/Entity';
 import { Field } from '../../data/Field';
 
-import { TextFieldComponent } from '../../fields/text-field/text-field.component';
+import { FieldFactory } from '../../fields/FieldFactory';
 
 import { Logger } from '../../util/Logger';
 const LOGGER: Logger = Logger.getLogger();
@@ -44,6 +44,11 @@ export class EntitiesComponent implements OnInit {
     LOGGER.debug('EntitiesComponent.selectEntityDefinition: ' + entityDef.name);
     this.selectedDefinition = entityDef;
     this.selectedEntity = null;
+
+    this.definitionsService
+    .loadEntityDefinition(entityDef)
+    .subscribe(data => this.selectedDefinition = data);
+    
     this.entitiesService
     .getEntitiesOfType(this.selectedDefinition.name)
     .subscribe(
@@ -60,9 +65,8 @@ export class EntitiesComponent implements OnInit {
   initFields(entityDefinition: EntityDefinition, entity: Entity) {
     entity.fields = [];
     for(let key in entity.data) {
-      let field = new Field(TextFieldComponent, key, entity.data[key]);
-      //field.name = key;
-      //field.value = entity.data[key];
+      let comp = FieldFactory.get(this.selectedDefinition, key);
+      let field = new Field(comp, key, entity.data[key]);
       entity.fields.push(field);
     }
   }
