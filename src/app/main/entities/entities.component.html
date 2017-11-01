@@ -1,7 +1,8 @@
 <div class="definitions-list">
   <!-- Entity definitions -->
   <mat-list>
-    <mat-list-item *ngFor="let entityDef of definitions" [class.rd-btn]="true" [class.selected-entity]="selectedDefinition && (entityDef.name === selectedDefinition.name)" (click)="selectEntityDefinition(entityDef)">
+    <mat-list-item *ngFor="let entityDef of definitions" [class.rd-btn]="true" [class.selected-entity]="selectedDefinition && (entityDef.name === selectedDefinition.name)"
+      (click)="selectEntityDefinition(entityDef)">
       <span>
         {{entityDef.name}}
       </span>
@@ -10,7 +11,16 @@
 </div>
 <div class="entities-list">
   <mat-list>
-    <mat-list-item *ngFor="let entity of entities" [class.rd-btn]="true" [class.selected-entity]="selectedEntity && (entity.id === selectedEntity.id)" (click)="selectEntity(entity)">
+    <mat-list-item>
+        <mat-chip-list *ngIf="selectedDefinition">
+            <mat-chip color="primary" selected="true" (click)="createEntity()" [class.rd-btn]="true">
+                {{selectedDefinition.name}}
+              <mat-icon>add</mat-icon>
+            </mat-chip>
+          </mat-chip-list>
+    </mat-list-item>
+    <mat-list-item *ngFor="let entity of entities" [class.rd-btn]="true" [class.selected-entity]="selectedEntity && (entity.id === selectedEntity.id)"
+      (click)="selectEntity(entity)">
       <span>
         {{entity.id}}
       </span>

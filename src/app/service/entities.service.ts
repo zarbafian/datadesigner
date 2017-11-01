@@ -6,6 +6,7 @@ import { Constants } from '../util/Constants';
 
 import { Observable } from 'rxjs/Observable';
 
+import { EntityDefinition } from '../data/EntityDefinition';
 import { Entity } from '../data/Entity';
 import { Field } from '../data/Field';
 import { FieldType } from '../data/FieldType';
@@ -26,6 +27,26 @@ export class EntitiesService {
       .map(
       resp => resp.json()
       );
+  }
+
+  createEntity(entityDefinition: EntityDefinition, entity: Entity): Observable<Entity> {
+
+    LOGGER.debug('EntitiesService.createEntity: ' + entityDefinition.name);
+
+    return this.http
+      .post(
+      Constants.getEntityType(entityDefinition.name),
+      entity
+      )
+      .map(
+      resp => {
+        if (resp.status == 200) {
+          return resp.json();
+        }
+        else {
+          throw new Error(resp.statusText);
+        }
+      });
   }
 
   updateEntity(entity: Entity): Observable<Entity> {

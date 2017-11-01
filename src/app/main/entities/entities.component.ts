@@ -22,11 +22,11 @@ export class EntitiesComponent implements OnInit {
   private definitions: EntityDefinition[] = [];
 
   private selectedDefinition: EntityDefinition;
-  
+
   private entities: Entity[];
-  
+
   private selectedEntity: Entity;
-  
+
   constructor(
     private definitionsService: DefinitionsService,
     private entitiesService: EntitiesService,
@@ -34,10 +34,10 @@ export class EntitiesComponent implements OnInit {
 
   ngOnInit() {
     this.definitionsService
-    .getDefinitions()
-    .subscribe(
-    data => this.definitions = data
-    );
+      .getDefinitions()
+      .subscribe(
+      data => this.definitions = data
+      );
   }
 
   selectEntityDefinition(entityDef: EntityDefinition) {
@@ -46,17 +46,17 @@ export class EntitiesComponent implements OnInit {
     this.selectedEntity = null;
 
     this.definitionsService
-    .loadEntityDefinition(entityDef)
-    .subscribe(data => this.selectedDefinition = data);
-    
+      .loadEntityDefinition(entityDef)
+      .subscribe(data => this.selectedDefinition = data);
+
     this.entitiesService
-    .getEntitiesOfType(this.selectedDefinition.name)
-    .subscribe(
-      data => 
-      this.entities = data
-    );
+      .getEntitiesOfType(this.selectedDefinition.name)
+      .subscribe(
+      data =>
+        this.entities = data
+      );
   }
-  
+
   selectEntity(entity: Entity) {
     LOGGER.debug('EntitiesComponent.selectEntity: ' + entity.id);
     this.initFields(this.selectedDefinition, entity);
@@ -64,10 +64,30 @@ export class EntitiesComponent implements OnInit {
   }
   initFields(entityDefinition: EntityDefinition, entity: Entity) {
     entity.fields = [];
-    for(let key in entity.data) {
+    for (let key in entity.data) {
       let comp = FieldFactory.get(this.selectedDefinition, key);
       let field = new Field(comp, key, entity.data[key]);
       entity.fields.push(field);
     }
   }
+
+  createEntity() {
+    LOGGER.debug('createEntity');
+
+    let newEntity: Entity = new Entity();
+    newEntity.type = this.selectedDefinition.name;
+    newEntity.data = {};
+
+    this.entitiesService
+      .createEntity(this.selectedDefinition, newEntity)
+      .subscribe(
+      data => {
+        LOGGER.debug('create successful: ' + data.id);
+        this.entities.unshift(data);
+      },
+      error => {
+        LOGGER.debug('create error: ' + error);
+      });
+  }
+
 }
