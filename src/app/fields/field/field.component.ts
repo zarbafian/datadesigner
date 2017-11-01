@@ -5,6 +5,9 @@ import { AbstractFieldComponent } from '../abstract-field.component';
 
 import { Field } from '../../data/Field';
 
+import { Logger } from '../../util/Logger';
+const LOGGER: Logger = Logger.getLogger();
+
 @Component({
   selector: 'app-field',
   templateUrl: './field.component.html',

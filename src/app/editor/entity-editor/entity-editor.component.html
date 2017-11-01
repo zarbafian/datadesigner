@@ -2,5 +2,9 @@
     <!--
     <input matInput value="{{field.value}}" placeholder="{{field.name}}">
     -->
-    <app-field *ngFor="let field of entity.fields" [field]="field"></app-field>
+
+    <mat-button-toggle [checked]="entitySaved" [disabled]="!canSave">SAVE</mat-button-toggle>
+    <br/>
+    <br/>
+    <app-field *ngFor="let field of entity.fields" [field]="field" (onValueChange)="onFieldValueChanged($event)"></app-field>
 </div>

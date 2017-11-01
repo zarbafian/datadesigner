@@ -5,3 +5,12 @@
     cursor: pointer !important;
     box-shadow: 0px 0px 10px 2px #999999;
 }
+
+.mat-button-toggle {
+    background-color: #eca986;
+    color: #111111;
+}
+.mat-button-toggle-checked {
+    background-color: #7bf791;
+    color: #111111;
+}

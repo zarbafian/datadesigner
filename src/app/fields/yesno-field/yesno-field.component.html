@@ -1,1 +1,1 @@
-<mat-checkbox [checked]="field.value">{{field.name}}</mat-checkbox>
+<mat-checkbox #yesnoField [checked]="field.value" (change)="notifyChange(yesnoField.checked)">{{field.name}}</mat-checkbox>

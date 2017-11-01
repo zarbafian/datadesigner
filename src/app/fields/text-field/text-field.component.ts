@@ -1,8 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { Field } from '../../data/Field';
+import { ValueChange } from '../../data/ValueChange';
 
 import { AbstractFieldComponent } from '../abstract-field.component';
+
+import { DataExchangeService } from '../../service/data-exchange.service';
 
 import { Logger } from '../../util/Logger';
 const LOGGER: Logger = Logger.getLogger();
@@ -16,10 +19,15 @@ export class TextFieldComponent implements OnInit, AbstractFieldComponent {
 
   @Input() field: Field;
 
-  constructor() { }
+  constructor(public dataExchangeService: DataExchangeService) {
 
-  ngOnInit() {
-    //LOGGER.debug('TextFieldComponent.ngOnInit: ' + this.field.name + ' -> ' + this.field.value);
   }
 
+  ngOnInit() {
+  }
+
+  notifyChange(newValue: any) {
+    LOGGER.debug('TextFieldComponent.notifyChange:  ' + newValue);
+    this.dataExchangeService.notifyChange(new ValueChange(newValue, this.field));
+  }
 }

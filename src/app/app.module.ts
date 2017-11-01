@@ -19,6 +19,8 @@ import { AuthRequestOptions } from './service/AuthRequestOptions';
 import { LoginService } from './service/login.service';
 import { DefinitionsService } from './service/definitions.service';
 import { EntitiesService } from './service/entities.service';
+import { DataExchangeService } from './service/data-exchange.service';
+
 import { HomeComponent } from './main/home/home.component';
 import { LoginComponent } from './main/login/login.component';
 import { DefinitionsComponent } from './main/definitions/definitions.component';
@@ -97,6 +99,7 @@ const appRoutes: Routes = [
     LoginService,
     DefinitionsService,
     EntitiesService,
+    DataExchangeService,
     { provide: RequestOptions, useClass: AuthRequestOptions },
   ],
   bootstrap: [AppComponent]
