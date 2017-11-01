@@ -2,7 +2,7 @@ import { Field } from './Field';
 
 export class Entity {
     id: number;
-    name: string;
+    type: string;
     data: {};
     fields: Field[];
 }

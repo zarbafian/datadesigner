@@ -19,12 +19,32 @@ export class EntitiesService {
   constructor(private http: Http) { }
 
   getEntitiesOfType(definition: string): Observable<Entity[]> {
-    
+
     return this.http.get(
       Constants.getEntityType(definition)
     )
-    .map(
+      .map(
       resp => resp.json()
-    );
+      );
+  }
+
+  updateEntity(entity: Entity): Observable<Entity> {
+
+    LOGGER.debug('EntitiesService.updateEntity: ' + entity.type + '.' + entity.id);
+
+    return this.http
+      .put(
+      Constants.getEntityByTypeAndId(entity.type, entity.id),
+      entity
+      )
+      .map(
+      resp => {
+        if (resp.status == 200) {
+          return resp.json();
+        }
+        else {
+          throw new Error(resp.statusText);
+        }
+      });
   }
 }

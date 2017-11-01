@@ -1,1 +1,1 @@
-<mat-checkbox #yesnoField [checked]="field.value" (change)="notifyChange(yesnoField.checked)">{{field.name}}</mat-checkbox>
+<mat-checkbox #yesnoField [(ngModel)]="field.value" (change)="notifyChange(yesnoField.checked)">{{field.name}}</mat-checkbox>
