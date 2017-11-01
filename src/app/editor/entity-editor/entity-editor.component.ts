@@ -1,4 +1,4 @@
-import { Component, OnInit, Input , ContentChildren, AfterContentInit   } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { EntityDefinition } from '../../data/EntityDefinition';
 import { Entity } from '../../data/Entity';
@@ -33,7 +33,7 @@ export class EntityEditorComponent implements OnInit {
 
   announce() {
     // TODO
-    let mission = "what mission?!";
+    let mission = 'what mission?!';
     this.dataExchangeService.announceMission(mission);
     LOGGER.debug(`Mission "${mission}" announced`);
 
@@ -42,10 +42,4 @@ export class EntityEditorComponent implements OnInit {
 
   ngOnInit() {
   }
-  onFieldValueChanged(event: any) {
-
-    //LOGGER.debug('EntityEditorComponent.onFieldValueChanged: ' + event + ' -> ' + field.name);
-    LOGGER.debug('EntityEditorComponent.onFieldValueChanged: ' + event);
-  }
-  
 }
