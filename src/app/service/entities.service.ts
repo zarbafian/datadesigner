@@ -68,4 +68,23 @@ export class EntitiesService {
         }
       });
   }
+
+  deleteEntity(entity: Entity) {
+
+    LOGGER.debug('EntitiesService.deleteEntity: ' + entity.type + '.' + entity.id);
+    
+    return this.http
+      .delete(
+      Constants.getEntityByTypeAndId(entity.type, entity.id)
+      )
+      .map(
+      resp => {
+        if (resp.status == 204) {
+          return;
+        }
+        else {
+          throw new Error(resp.statusText);
+        }
+      });
+  }
 }

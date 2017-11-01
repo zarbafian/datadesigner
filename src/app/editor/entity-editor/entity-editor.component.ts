@@ -1,8 +1,10 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
+import { Component, OnInit, Input, Output, OnChanges, SimpleChanges, SimpleChange, EventEmitter } from '@angular/core';
 
 import { EntityDefinition } from '../../data/EntityDefinition';
 import { Entity } from '../../data/Entity';
 import { Field } from '../../data/Field';
+
+import { FieldFactory } from '../../fields/FieldFactory';
 
 import { DataExchangeService } from '../../service/data-exchange.service';
 import { EntitiesService } from '../../service/entities.service';
@@ -19,7 +21,8 @@ const LOGGER: Logger = Logger.getLogger();
 export class EntityEditorComponent implements OnInit, OnChanges {
 
   entitySaved: boolean = true;
-  canSave: boolean = true;
+  canEdit: boolean = true;
+  canDelete: boolean = true;
 
   @Input()
   entityDefinition: EntityDefinition;
@@ -27,6 +30,8 @@ export class EntityEditorComponent implements OnInit, OnChanges {
   @Input()
   entity: Entity;
 
+  @Output()
+  entityDeleted: EventEmitter<Entity> = new EventEmitter<Entity>();
 
   constructor(
     private dataExchangeService: DataExchangeService,
@@ -47,7 +52,7 @@ export class EntityEditorComponent implements OnInit, OnChanges {
       this.entitySaved = true;
     }
     else {
-      LOGGER.debug('NO CHANGE: ' + (change.previousValue ? change.previousValue.id : null) + ' -> ' + change.currentValue.id);
+      //LOGGER.debug('NO CHANGE: ' + (change.previousValue ? change.previousValue.id : null) + ' -> ' + change.currentValue.id);
     }
   }
 
@@ -61,17 +66,11 @@ export class EntityEditorComponent implements OnInit, OnChanges {
   ngOnInit() {
   }
 
-  extractFieldValues(entityDefinition: EntityDefinition, entity: Entity) {
-    entity.data = {};
-    for (let field of entity.fields) {
-      entity.data[field.name] = field.value;
-    }
-  }
-
   saveEntity() {
+
     LOGGER.debug('saveEntity');
 
-    this.extractFieldValues(this.entityDefinition, this.entity);
+    FieldFactory.extractFieldValues(this.entityDefinition, this.entity);
 
     this.entitiesService
       .updateEntity(this.entity)
@@ -84,5 +83,22 @@ export class EntityEditorComponent implements OnInit, OnChanges {
         LOGGER.debug('update error: ' + error);
         this.entitySaved = false;
       });
+  }
+
+  deleteEntity() {
+
+    LOGGER.debug('deleteEntity');
+
+    this.entitiesService
+      .deleteEntity(this.entity)
+      .subscribe(
+      data => {
+        LOGGER.debug('delete successful: ' + data);
+        this.entityDeleted.emit(this.entity);
+      },
+      error => {
+        LOGGER.debug('delete error: ' + error);
+      }
+      );
   }
 }

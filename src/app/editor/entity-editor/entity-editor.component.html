@@ -3,7 +3,8 @@
     <input matInput value="{{field.value}}" placeholder="{{field.name}}">
     -->
 
-    <mat-button-toggle [checked]="entitySaved" [disabled]="!canSave" (click)="saveEntity()">SAVE</mat-button-toggle>
+    <mat-button-toggle [checked]="entitySaved" [disabled]="!canEdit" (click)="saveEntity()">SAVE</mat-button-toggle>
+    <button mat-button [disabled]="!canDelete" (click)="deleteEntity()">DELETE<mat-icon>delete</mat-icon></button>
     <br/>
     <br/>
     <app-field *ngFor="let field of entity.fields" [field]="field"></app-field>

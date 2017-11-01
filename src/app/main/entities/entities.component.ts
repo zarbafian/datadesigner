@@ -41,7 +41,9 @@ export class EntitiesComponent implements OnInit {
   }
 
   selectEntityDefinition(entityDef: EntityDefinition) {
+
     LOGGER.debug('EntitiesComponent.selectEntityDefinition: ' + entityDef.name);
+    
     this.selectedDefinition = entityDef;
     this.selectedEntity = null;
 
@@ -58,25 +60,19 @@ export class EntitiesComponent implements OnInit {
   }
 
   selectEntity(entity: Entity) {
+
     LOGGER.debug('EntitiesComponent.selectEntity: ' + entity.id);
-    this.initFields(this.selectedDefinition, entity);
+    
+    FieldFactory.initEntityFields(this.selectedDefinition, entity);
+    
     this.selectedEntity = entity;
-  }
-  initFields(entityDefinition: EntityDefinition, entity: Entity) {
-    entity.fields = [];
-    for (let key in entity.data) {
-      let comp = FieldFactory.get(this.selectedDefinition, key);
-      let field = new Field(comp, key, entity.data[key]);
-      entity.fields.push(field);
-    }
   }
 
   createEntity() {
-    LOGGER.debug('createEntity');
 
-    let newEntity: Entity = new Entity();
-    newEntity.type = this.selectedDefinition.name;
-    newEntity.data = {};
+    LOGGER.debug('EntitiesComponent.createEntity');
+
+    let newEntity = FieldFactory.newEntity(this.selectedDefinition);
 
     this.entitiesService
       .createEntity(this.selectedDefinition, newEntity)
@@ -90,4 +86,21 @@ export class EntitiesComponent implements OnInit {
       });
   }
 
+  onEntityDeleted(entity: Entity) {
+
+    LOGGER.debug('onEntityDeleted');
+
+    let indexToDelete = null;
+
+    for(let i=0; i < this.entities.length; i++) {
+
+      if(this.entities[i].id === entity.id) {
+        indexToDelete = i;
+        break;
+      }
+    }
+
+    this.selectedEntity = null;
+    this.entities.splice(indexToDelete, 1);
+  }
 }

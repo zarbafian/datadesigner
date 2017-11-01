@@ -28,5 +28,5 @@
   </mat-list>
 </div>
 <div class="entity-editor">
-  <app-entity-editor *ngIf="selectedEntity" [entity]="selectedEntity"></app-entity-editor>
+  <app-entity-editor *ngIf="selectedEntity" [entity]="selectedEntity" (entityDeleted)="onEntityDeleted($event)"></app-entity-editor>
 </div>

@@ -1,4 +1,5 @@
 import { EntityDefinition } from '../data/EntityDefinition';
+import { Entity } from '../data/Entity';
 import { Field } from '../data/Field';
 
 import { TextFieldComponent } from './text-field/text-field.component';
@@ -32,28 +33,28 @@ export class FieldFactory {
 
         let myDefnition = null;
 
-        for(let definition of entityDefinition.fields) {
+        for (let definition of entityDefinition.fields) {
 
-            if(definition.name === fieldname) {
+            if (definition.name === fieldname) {
                 LOGGER.debug('found definition of type: ' + definition.fieldType.key);
                 myDefnition = definition;
             }
         }
 
-        if(!myDefnition) {
+        if (!myDefnition) {
             LOGGER.debug('no definition found for field: ' + fieldname);
             return TextFieldComponent;
         }
 
-        if(myDefnition.fieldType.key === YESNO_FIELD_TYPE) {
+        if (myDefnition.fieldType.key === YESNO_FIELD_TYPE) {
             LOGGER.debug('returning yesno');
             return YesnoFieldComponent;
         }
-        else if(myDefnition.fieldType.key === PARAGRAPH_FIELD_TYPE) {
+        else if (myDefnition.fieldType.key === PARAGRAPH_FIELD_TYPE) {
             LOGGER.debug('returning paragraph');
             return ParagraphFieldComponent;
         }
-        else if(myDefnition.fieldType.key === INTEGER_FIELD_TYPE) {
+        else if (myDefnition.fieldType.key === INTEGER_FIELD_TYPE) {
             LOGGER.debug('returning integer');
             return IntegerFieldComponent;
         }
@@ -61,5 +62,51 @@ export class FieldFactory {
             LOGGER.debug('returning text');
             return TextFieldComponent;
         }
+    }
+
+    /**
+     * Inititialize an entity fields with Angular components using value 
+     * and field type in an entity's data field.
+     * @param entityDefinition the meta definition of the entity
+     * @param entity the entity to process
+     */
+    static initEntityFields(entityDefinition: EntityDefinition, entity: Entity) {
+
+        entity.fields = [];
+
+        for (let key in entity.data) {
+            let comp = FieldFactory.get(entityDefinition, key);
+            let field = new Field(comp, key, entity.data[key]);
+            entity.fields.push(field);
+        }
+    }
+
+    /**
+     * Extract GUI/components field value to set the entity data field used for persistence.
+     * @param entityDefinition the meta definition of the entity
+     * @param entity the entity to process
+     */
+    static extractFieldValues(entityDefinition: EntityDefinition, entity: Entity) {
+        
+        entity.data = {};
+        
+        for (let field of entity.fields) {
+            entity.data[field.name] = field.value;
+        }
+    }
+
+    static newEntity(entityDefinition: EntityDefinition) {
+        
+        let newEntity: Entity = new Entity();
+        
+        newEntity.type = entityDefinition.name;
+        
+        newEntity.data = {};
+        
+        for (let field of entityDefinition.fields) {
+            newEntity.data[field.name] = null;
+        }
+
+        return newEntity;
     }
 }

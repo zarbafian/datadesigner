@@ -137,25 +137,25 @@ export class DefinitionsService {
         }
       });
   }
-  
+
   deleteFieldDefinition(entityDef: string, field: string): Observable<void> {
-    
-        LOGGER.debug('deleteFieldDefinition.deleteFieldDefinition: ' + entityDef + '.' + field);
-    
-        return this.http
-          .delete(
-          Constants.getFieldUrl(entityDef, field)
-          )
-          .map(
-          resp => {
-            if (resp.status == 204) {
-              return;
-            }
-            else {
-              throw new Error(resp.statusText);
-            }
-          }
-          );
+
+    LOGGER.debug('deleteFieldDefinition.deleteFieldDefinition: ' + entityDef + '.' + field);
+
+    return this.http
+      .delete(
+      Constants.getFieldUrl(entityDef, field)
+      )
+      .map(
+      resp => {
+        if (resp.status == 204) {
+          return;
+        }
+        else {
+          throw new Error(resp.statusText);
+        }
       }
-      
+      );
+  }
+
 }
