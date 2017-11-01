@@ -58,6 +58,11 @@ export class FieldFactory {
             LOGGER.debug('returning integer');
             return IntegerFieldComponent;
         }
+        else if (myDefnition.fieldType.key === DECIMAL_FIELD_TYPE) {
+            LOGGER.debug('returning decimal');
+            return DecimalFieldComponent;
+        }
+
         else {
             LOGGER.debug('returning text');
             return TextFieldComponent;
@@ -102,11 +107,13 @@ export class FieldFactory {
         newEntity.type = entityDefinition.name;
         
         newEntity.data = {};
-        
+
+        /*
         for (let field of entityDefinition.fields) {
             newEntity.data[field.name] = null;
         }
-
+        */
+        
         return newEntity;
     }
 }

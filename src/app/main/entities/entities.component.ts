@@ -80,6 +80,8 @@ export class EntitiesComponent implements OnInit {
       data => {
         LOGGER.debug('create successful: ' + data.id);
         this.entities.unshift(data);
+
+        this.selectEntity(data);
       },
       error => {
         LOGGER.debug('create error: ' + error);
