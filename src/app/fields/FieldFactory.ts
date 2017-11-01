@@ -62,6 +62,14 @@ export class FieldFactory {
             LOGGER.debug('returning decimal');
             return DecimalFieldComponent;
         }
+        else if (myDefnition.fieldType.key === DATE_FIELD_TYPE) {
+            LOGGER.debug('returning date');
+            return DateFieldComponent;
+        }
+        else if (myDefnition.fieldType.key === DATETIME_FIELD_TYPE) {
+            LOGGER.debug('returning date');
+            return DatetimeFieldComponent;
+        }
 
         else {
             LOGGER.debug('returning text');

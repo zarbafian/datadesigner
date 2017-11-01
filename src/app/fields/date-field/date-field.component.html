@@ -1,5 +1,5 @@
 <mat-form-field>
-  <input matInput [matDatepicker]="picker" placeholder="{{field.name}}">
+  <input matInput #dateField [matDatepicker]="picker" placeholder="{{field.name}}" [(ngModel)]="field.value" (dateInput)="notifyChange($event)" (dateChange)="notifyChange($event)">
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker></mat-datepicker>
+  <mat-datepicker #picker touchUi="true"></mat-datepicker>
 </mat-form-field>

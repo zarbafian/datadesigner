@@ -13,6 +13,9 @@ import 'hammerjs';
 import { AppComponent } from './app.component';
 import { Material } from './material';
 
+// TODO: move
+import { MAT_DATE_LOCALE } from '@angular/material';
+
 // withCredentials: true
 import { AuthRequestOptions } from './service/AuthRequestOptions';
 
@@ -101,6 +104,7 @@ const appRoutes: Routes = [
     EntitiesService,
     DataExchangeService,
     { provide: RequestOptions, useClass: AuthRequestOptions },
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
   ],
   bootstrap: [AppComponent]
 })

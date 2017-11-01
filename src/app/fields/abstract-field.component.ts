@@ -13,4 +13,5 @@ export interface AbstractFieldComponent {
      * Emit the new value of the field.
      */
     dataExchangeService: DataExchangeService;
+    notifyChange(newValue: any);
 }
