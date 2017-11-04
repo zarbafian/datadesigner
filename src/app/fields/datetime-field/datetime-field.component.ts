@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
+import { Entity } from '../../data/Entity';
 import { Field } from '../../data/Field';
 import { ValueChange } from '../../data/ValueChange';
 
@@ -18,23 +19,27 @@ const LOGGER: Logger = Logger.getLogger();
   styleUrls: ['./datetime-field.component.css']
 })
 export class DatetimeFieldComponent implements OnInit, AbstractFieldComponent {
-  
-    @Input() field: Field;
-    
-      constructor(public dataExchangeService: DataExchangeService) { }
-    
-      ngOnInit() {
-      }
-    
-      notifyChange(newValue: any) {
-        LOGGER.debug('DatetimeFieldComponent.notifyChange: ' + newValue.value);
-        
-        let str = DateFormat.formatDatetime(newValue.value);
-        LOGGER.debug('formatted date: ' + str);
 
-        this.field.value = str;
 
-        this.dataExchangeService.notifyChange(new ValueChange(newValue, this.field));
-      }
+  @Input()
+  entity: Entity;
+
+  @Input()
+  field: Field;
+
+  constructor(public dataExchangeService: DataExchangeService) { }
+
+  ngOnInit() {
   }
-  
+
+  notifyChange(newValue: any) {
+    LOGGER.debug('DatetimeFieldComponent.notifyChange: ' + newValue.value);
+
+    let str = DateFormat.formatDatetime(newValue.value);
+    LOGGER.debug('formatted date: ' + str);
+
+    this.field.value = str;
+
+    this.dataExchangeService.notifyChange(new ValueChange(newValue, this.field));
+  }
+}

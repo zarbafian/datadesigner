@@ -1,3 +1,8 @@
-<p>
-  entity-field works!
-</p>
+<mat-form-field floatPlaceholder="default">
+  <mat-select placeholder="{{field.name}}" [(ngModel)]="field.value" #entityselect="matSelect">
+    <mat-select-trigger>{{ triggerEntitySelection(entityselect.selected?.value, entityselect.selected?.viewValue) }}</mat-select-trigger>
+    <mat-option *ngFor="let e of entities" [value]="e.id">
+      {{ e.id }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

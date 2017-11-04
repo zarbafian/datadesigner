@@ -140,7 +140,7 @@ export class DefinitionsService {
 
   deleteFieldDefinition(entityDef: string, field: string): Observable<void> {
 
-    LOGGER.debug('deleteFieldDefinition.deleteFieldDefinition: ' + entityDef + '.' + field);
+    LOGGER.debug('DefinitionsService.deleteFieldDefinition: ' + entityDef + '.' + field);
 
     return this.http
       .delete(
@@ -158,4 +158,17 @@ export class DefinitionsService {
       );
   }
 
+  getEntityFieldType(definition: string, field: string): Observable<FieldDefinition> {
+
+    LOGGER.debug('DefinitionsService.getEntityFieldType: ' + definition + '.' + field);
+
+    return this.http
+      .get(
+      Constants.getFieldUrl(definition, field)
+      )
+      .map(
+      resp => resp.json()
+      );
+
+  }
 }

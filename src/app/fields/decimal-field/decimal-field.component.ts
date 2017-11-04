@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import { Entity } from '../../data/Entity';
 import { Field } from '../../data/Field';
 import { ValueChange } from '../../data/ValueChange';
 
@@ -17,15 +18,20 @@ const LOGGER: Logger = Logger.getLogger();
 })
 export class DecimalFieldComponent implements OnInit, AbstractFieldComponent {
 
-  @Input() field: Field;
-  
-    constructor(public dataExchangeService: DataExchangeService) { }
-  
-    ngOnInit() {
-    }
-  
-    notifyChange(newValue: any) {
-      LOGGER.debug('DecimalFieldComponent.notifyChange: ' + newValue);
-      this.dataExchangeService.notifyChange(new ValueChange(newValue, this.field));
-    }
+
+  @Input()
+  entity: Entity;
+
+  @Input()
+  field: Field;
+
+  constructor(public dataExchangeService: DataExchangeService) { }
+
+  ngOnInit() {
+  }
+
+  notifyChange(newValue: any) {
+    LOGGER.debug('DecimalFieldComponent.notifyChange: ' + newValue);
+    this.dataExchangeService.notifyChange(new ValueChange(newValue, this.field));
+  }
 }

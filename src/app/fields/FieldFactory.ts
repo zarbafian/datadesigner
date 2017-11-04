@@ -70,6 +70,14 @@ export class FieldFactory {
             LOGGER.debug('returning date');
             return DatetimeFieldComponent;
         }
+        else if (myDefnition.fieldType.key === ENTITY_FIELD_TYPE) {
+            LOGGER.debug('returning entity');
+            return EntityFieldComponent;
+        }
+        else if (myDefnition.fieldType.key === FILE_FIELD_TYPE) {
+            LOGGER.debug('returning date');
+            return FileFieldComponent;
+        }
 
         else {
             LOGGER.debug('returning text');

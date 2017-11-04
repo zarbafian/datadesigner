@@ -3,6 +3,7 @@ import { Component, OnInit, Input, Output, OnChanges, SimpleChanges, SimpleChang
 import { EntityDefinition } from '../../data/EntityDefinition';
 import { Entity } from '../../data/Entity';
 import { Field } from '../../data/Field';
+import { FileValue } from '../../data/FileValue';
 
 import { FieldFactory } from '../../fields/FieldFactory';
 
@@ -43,6 +44,28 @@ export class EntityEditorComponent implements OnInit, OnChanges {
         LOGGER.debug(`Received new value: ${valueChange.getNewValue()} from field ${valueChange.getField().name}`);
         this.entitySaved = false;
       });
+
+    dataExchangeService.filesSubmitted$.subscribe(
+      fileValue => {
+        LOGGER.debug(`Received fileValue from field ${fileValue.field.name}`);
+        this.entitySaved = false;
+
+        this.uploadFiles(fileValue);
+      });
+  }
+
+  uploadFiles(fileValue: FileValue) {
+
+    this.entitiesService
+      .saveFileValue(this.entity, fileValue.field, fileValue.files)
+      .subscribe(
+        data => {
+          LOGGER.debug('upload successful');
+        },
+        error => {
+          LOGGER.debug('upload error');
+        }
+      )
   }
 
   ngOnChanges(changes: SimpleChanges) {

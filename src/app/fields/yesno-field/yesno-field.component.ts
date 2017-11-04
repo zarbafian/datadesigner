@@ -1,5 +1,6 @@
 import { Component, OnInit, Input , Output, EventEmitter} from '@angular/core';
 
+import { Entity } from '../../data/Entity';
 import { Field } from '../../data/Field';
 import { ValueChange } from '../../data/ValueChange';
 
@@ -17,7 +18,12 @@ const LOGGER: Logger = Logger.getLogger();
 })
 export class YesnoFieldComponent implements OnInit, AbstractFieldComponent {
 
-  @Input() field: Field;
+
+  @Input()
+  entity: Entity;
+
+  @Input()
+  field: Field;
 
   @Output() onValueChange = new EventEmitter<boolean>();
   

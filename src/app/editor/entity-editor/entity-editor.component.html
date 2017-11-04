@@ -7,5 +7,5 @@
     <button mat-button [disabled]="!canDelete" (click)="deleteEntity()">DELETE<mat-icon>delete</mat-icon></button>
     <br/>
     <br/>
-    <app-field *ngFor="let field of entity.fields" [field]="field"></app-field>
+    <app-field *ngFor="let field of entity.fields" [entity]="entity" [field]="field"></app-field>
 </div>

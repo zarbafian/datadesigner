@@ -3,6 +3,7 @@ import { Component, OnInit, Input, ViewChild, ComponentFactoryResolver, AfterVie
 import { FieldDirective } from '../field.directive';
 import { AbstractFieldComponent } from '../abstract-field.component';
 
+import { Entity } from '../../data/Entity';
 import { Field } from '../../data/Field';
 
 import { Logger } from '../../util/Logger';
@@ -14,6 +15,9 @@ const LOGGER: Logger = Logger.getLogger();
   styleUrls: ['./field.component.css']
 })
 export class FieldComponent implements OnInit, AfterViewInit {
+
+  @Input()
+  entity: Entity;
 
   @Input()
   field: Field;
@@ -40,6 +44,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
     viewContainerRef.clear();
 
     let componentRef = viewContainerRef.createComponent(componentFactory);
+    (<AbstractFieldComponent>componentRef.instance).entity = this.entity;
     (<AbstractFieldComponent>componentRef.instance).field = this.field;
   }
 }

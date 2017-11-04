@@ -51,4 +51,7 @@ export class Constants {
     static getEntityByTypeAndId(type: string, id: number) {
         return Constants.ENTITIES + '/' + id + '?' + Constants.PARAMETER_TYPE + '=' + type;
     }
+    static getFieldByEntityAndName(entity: string, id: number, name: string) {
+        return Constants.ENTITIES + '/' + id + '/' + name + '?' + Constants.PARAMETER_TYPE + '=' + entity;
+    }
 }
