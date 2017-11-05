@@ -37,6 +37,13 @@ export class DefinitionsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.init();
+  }
+  
+  init() {
+
+    LOGGER.debug('DefinitionsComponent.init');
+    
     this.definitionsService
       .getDefinitions()
       .subscribe(

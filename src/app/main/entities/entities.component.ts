@@ -33,6 +33,13 @@ export class EntitiesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.init();
+  }
+
+  init() {
+
+    LOGGER.debug('EntitiesComponent.init');
+
     this.definitionsService
       .getDefinitions()
       .subscribe(

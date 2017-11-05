@@ -23,6 +23,9 @@ export class Constants {
 
     static ENTITIES = Constants.API + '/entities';
     static PARAMETER_TYPE = 'type';
+
+    static REPORTS = Constants.API + '/reports';
+    static ENTITIES_TYPE_REPORTS = Constants.REPORTS + '/entities';
     
     static getFielsTypesUrl() {
         return Constants.API + '/' + Constants.FIELD_TYPES;
@@ -54,4 +57,12 @@ export class Constants {
     /*static getFieldByEntityAndName(entity: string, id: number, name: string) {
         return Constants.ENTITIES + '/' + id + '/' + name + '?' + Constants.PARAMETER_TYPE + '=' + entity;
     }*/
+
+    // REPORTS
+    static getMainReports() {
+        return Constants.ENTITIES_TYPE_REPORTS;
+    }
+    static getEntityReport(name: string) {
+        return Constants.REPORTS + '/entities' + '/' + name;
+    }
 }

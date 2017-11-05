@@ -6,7 +6,10 @@ import { MatTab /*, ActivatedRoute, ParamMap*/ } from '@angular/material';
 
 import { LoginService } from '../../service/login.service';
 
+import { DefinitionsComponent } from '../definitions/definitions.component';
 import { EntitiesComponent } from '../entities/entities.component';
+import { ReportsComponent } from '../reports/reports.component';
+import { EventsComponent } from '../events/events.component';
 
 import { Logger } from '../../util/Logger';
 const LOGGER: Logger = Logger.getLogger();
@@ -23,9 +26,24 @@ export class HomeComponent implements OnInit {
 
   @ViewChild('entitiesTab')
   private entitiesTab: MatTab;
+  
+  @ViewChild('reportsTab')
+  private reportsTab: MatTab;
+  
+  @ViewChild('eventsTab')
+  private eventsTab: MatTab;
 
+  @ViewChild(DefinitionsComponent)
+  private definitionsComponent: DefinitionsComponent;
+  
   @ViewChild(EntitiesComponent)
   private entitiesComponent: EntitiesComponent;
+  
+  @ViewChild(ReportsComponent)
+  private reportsComponent: ReportsComponent;
+  
+  @ViewChild(EventsComponent)
+  private eventsComponent: EventsComponent;
 
   constructor(
     private loginService: LoginService,
@@ -34,9 +52,21 @@ export class HomeComponent implements OnInit {
 
   onTabChanged() {
     LOGGER.debug('HomeComponent.onTabChanged');
-    if(this.entitiesTab.isActive) {
+    if(this.definitionsTab.isActive) {
+      LOGGER.debug('Re-init definitions components');
+      this.definitionsComponent.init();
+    }
+    else if(this.entitiesTab.isActive) {
       LOGGER.debug('Re-init entities components');
-      this.entitiesComponent.ngOnInit();
+      this.entitiesComponent.init();
+    }
+    else if(this.reportsTab.isActive) {
+      LOGGER.debug('Re-init reports components');
+      this.reportsComponent.init();
+    }
+    else if(this.eventsTab.isActive) {
+      LOGGER.debug('Re-init events components');
+      this.eventsComponent.init();
     }
   }
   ngOnInit() {
