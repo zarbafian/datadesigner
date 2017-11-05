@@ -42,6 +42,8 @@ import { FileFieldComponent } from './fields/file-field/file-field.component';
 import { EntityFieldComponent } from './fields/entity-field/entity-field.component';
 import { DateFieldComponent } from './fields/date-field/date-field.component';
 import { DatetimeFieldComponent } from './fields/datetime-field/datetime-field.component';
+import { ReportsComponent } from './main/reports/reports.component';
+import { EventsComponent } from './main/events/events.component';
 
 const appRoutes: Routes = [
   { path: 'signin', component: LoginComponent },
@@ -73,6 +75,8 @@ const appRoutes: Routes = [
     EntityFieldComponent,
     DateFieldComponent,
     DatetimeFieldComponent,
+    ReportsComponent,
+    EventsComponent,
   ],
   entryComponents: [
     TextFieldComponent,

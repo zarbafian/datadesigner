@@ -45,6 +45,7 @@ export class EntityEditorComponent implements OnInit, OnChanges {
         this.entitySaved = false;
       });
 
+      /*
     dataExchangeService.filesSubmitted$.subscribe(
       fileValue => {
         LOGGER.debug(`Received fileValue from field ${fileValue.field.name}`);
@@ -52,8 +53,10 @@ export class EntityEditorComponent implements OnInit, OnChanges {
 
         this.uploadFiles(fileValue);
       });
+      */
   }
 
+  /*
   uploadFiles(fileValue: FileValue) {
 
     this.entitiesService
@@ -67,6 +70,7 @@ export class EntityEditorComponent implements OnInit, OnChanges {
         }
       )
   }
+  */
 
   ngOnChanges(changes: SimpleChanges) {
     const change: SimpleChange = changes.entity;

@@ -46,12 +46,12 @@ export class Constants {
 
     // ENTITIES
     static getEntityType(type: string) {
-        return Constants.ENTITIES + '?' + Constants.PARAMETER_TYPE + '=' + type;
+        return Constants.ENTITIES + '/' + type;
     }
     static getEntityByTypeAndId(type: string, id: number) {
-        return Constants.ENTITIES + '/' + id + '?' + Constants.PARAMETER_TYPE + '=' + type;
+        return Constants.getEntityType(type) + '/' + id;
     }
-    static getFieldByEntityAndName(entity: string, id: number, name: string) {
+    /*static getFieldByEntityAndName(entity: string, id: number, name: string) {
         return Constants.ENTITIES + '/' + id + '/' + name + '?' + Constants.PARAMETER_TYPE + '=' + entity;
-    }
+    }*/
 }

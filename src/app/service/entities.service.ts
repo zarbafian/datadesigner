@@ -88,7 +88,7 @@ export class EntitiesService {
         }
       });
   }
-
+/*
   saveFileValue(entity: Entity, field: Field, files): Observable<FileValue> {
 
     return this.makeFileRequest(
@@ -132,4 +132,5 @@ export class EntitiesService {
       xhr.send(formData);
     });
   }
+  */
 }
