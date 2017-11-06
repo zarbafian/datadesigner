@@ -1,3 +1,16 @@
-<p>
-  events works!
-</p>
+<table matSort (matSortChange)="sortData($event)">
+    <tr>
+      <th mat-sort-header="action">Event</th>
+      <th mat-sort-header="timestamp">Timstamp</th>
+      <th mat-sort-header="fat">Target</th>
+      <th mat-sort-header="carbs">Parameters</th>
+    </tr>
+  
+    <tr *ngFor="let el of eventLogs">
+      <td>{{el.action}}</td>
+      <td>{{el.timestamp}}</td>
+      <td>{{el.target}}</td>
+      <td>{{el.params}}</td>
+    </tr>
+  </table>
+  

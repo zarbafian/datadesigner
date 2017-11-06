@@ -24,6 +24,7 @@ import { DefinitionsService } from './service/definitions.service';
 import { EntitiesService } from './service/entities.service';
 import { DataExchangeService } from './service/data-exchange.service';
 import { ReportsService } from './service/reports.service';
+import { EventsService } from './service/events.service';
 
 import { HomeComponent } from './main/home/home.component';
 import { LoginComponent } from './main/login/login.component';
@@ -109,6 +110,7 @@ const appRoutes: Routes = [
     EntitiesService,
     DataExchangeService,
     ReportsService,
+    EventsService,
     { provide: RequestOptions, useClass: AuthRequestOptions },
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
   ],

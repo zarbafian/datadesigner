@@ -27,6 +27,8 @@ export class Constants {
     static REPORTS = Constants.API + '/reports';
     static ENTITIES_TYPE_REPORTS = Constants.REPORTS + '/entities';
     
+    static EVENTS = Constants.API + '/events';
+    
     static getFielsTypesUrl() {
         return Constants.API + '/' + Constants.FIELD_TYPES;
     }
@@ -64,5 +66,10 @@ export class Constants {
     }
     static getEntityReport(name: string) {
         return Constants.REPORTS + '/entities' + '/' + name;
+    }
+
+    // EVENT LOGS
+    static getEventLogs() {
+        return Constants.EVENTS;
     }
 }
